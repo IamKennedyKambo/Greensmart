@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:id="@+id/tbPurchase"
+        android:background="@color/colorAccent"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="?android:actionBarSize" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:cardUseCompatPadding="true"
+        android:id="@+id/cdImage"
+        app:cardElevation="4dp"
+        android:padding="16dp"
+        app:layout_constraintHeight_percent=".55"
+        app:layout_constraintTop_toBottomOf="@id/tbPurchase">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:id="@+id/ivProduct"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toBottomOf="@id/cdImage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cdImage">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clPoints"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                app:layout_constraintEnd_toStartOf="@id/clCash"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintWidth_percent=".49">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPoints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Points"
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAvailable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPoints" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPoints" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvUsable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usable"
+                    android:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAvailable" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvUs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAv" />
+
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/nmPurchase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvUsable"
+                    app:np_dividerColor="@color/colorPrimary"
+                    app:np_height="40dp"
+                    app:np_max="59"
+                    app:np_min="0"
+                    app:np_orientation="horizontal"
+                    app:np_selectedTextColor="@color/colorPrimary"
+                    app:np_textColor="@color/colorPrimary"
+                    app:np_value="3"
+                    app:np_width="150dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChange"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To Spend"
+                    android:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nmPurchase" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvCh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nmPurchase" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:id="@+id/butPoints"
+                    android:layout_height="wrap_content"
+                    android:text="Buy with points"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/background_dotted"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clCash"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:padding="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/clPoints"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".49">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvPoints1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Cash"
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAvailable1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPoints1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="120"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPoints1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvUsable1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Usable"
+                    android:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAvailable1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvUs1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="80"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvAv1" />
+
+                <com.shawnlin.numberpicker.NumberPicker
+                    android:id="@+id/nmPurchase1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvUsable1"
+                    app:np_dividerColor="@color/colorPrimary"
+                    app:np_height="40dp"
+                    app:np_max="59"
+                    app:np_min="0"
+                    app:np_orientation="horizontal"
+                    app:np_selectedTextColor="@color/colorPrimary"
+                    app:np_textColor="@color/colorPrimary"
+                    app:np_value="3"
+                    app:np_width="150dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSpent1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="to spend"
+                    android:textAllCaps="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nmPurchase1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSp1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/nmPurchase1" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/butCash"
+                    android:text="Buy with cash"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

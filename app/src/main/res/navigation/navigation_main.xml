@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/destination_home">
+
+    <fragment
+        android:id="@+id/destination_login"
+        android:name="org.triniti.greensmart.ui.login.Signin"
+        android:label="main_fragment"
+        tools:layout="@layout/layout_f_login" >
+        <action
+            android:id="@+id/action_destination_login_to_destination_signup"
+            app:destination="@id/destination_signup" />
+        <action
+            android:id="@+id/action_destination_login_to_destination_home"
+            app:destination="@id/destination_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_home"
+        android:name="org.triniti.greensmart.ui.main.Home"
+        android:label="Home" />
+    <fragment
+        android:id="@+id/destination_mall"
+        android:name="org.triniti.greensmart.ui.shop.mall.Mall"
+        android:label="Mall" >
+        <action
+            android:id="@+id/action_destination_mall_to_destination_single"
+            app:destination="@id/destination_single" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_map"
+        android:name="org.triniti.greensmart.ui.shop.Map"
+        android:label="Map" />
+    <fragment
+        android:id="@+id/destination_purchase"
+        android:name="org.triniti.greensmart.ui.shop.Purchase"
+        android:label="Purchase" >
+        <argument
+            android:name="product"
+            app:argType="org.triniti.greensmart.data.pojos.Product" />
+        <action
+            android:id="@+id/action_destination_purchase_to_destination_success"
+            app:destination="@id/destination_success" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_settings"
+        android:name="org.triniti.greensmart.ui.main.settings.About"
+        android:label="Settings" />
+    <fragment
+        android:id="@+id/destination_signup"
+        android:name="org.triniti.greensmart.ui.login.Signup"
+        android:label="Signup" >
+        <action
+            android:id="@+id/action_destination_signup_to_destination_login"
+            app:destination="@id/destination_login" />
+        <action
+            android:id="@+id/action_destination_signup_to_destination_home"
+            app:destination="@id/destination_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_single"
+        android:name="org.triniti.greensmart.ui.shop.single.Single"
+        android:label="Single" >
+        <action
+            android:id="@+id/action_destination_single_to_destination_purchase"
+            app:destination="@id/destination_purchase" />
+        <argument
+            android:name="shopId"
+            app:argType="string" />
+        <argument
+            android:name="shopName"
+            app:argType="string" />
+        <argument
+            android:name="shop"
+            app:argType="org.triniti.greensmart.data.pojos.Shop" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_success"
+        android:name="org.triniti.greensmart.ui.shop.Success"
+        android:label="Success" >
+        <action
+            android:id="@+id/action_destination_success_to_destination_cart"
+            app:destination="@id/destination_cart" />
+        <argument
+            android:name="product"
+            app:argType="org.triniti.greensmart.data.pojos.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_points"
+        android:name="org.triniti.greensmart.ui.main.Points"
+        android:label="Points" />
+    <fragment
+        android:id="@+id/destination_cart"
+        android:name="org.triniti.greensmart.ui.shop.cart.Cart"
+        android:label="Cart" >
+        <argument
+            android:name="product"
+            app:argType="org.triniti.greensmart.data.pojos.Product" />
+        <action
+            android:id="@+id/action_destination_cart_to_destination_success"
+            app:destination="@id/destination_success" />
+    </fragment>
+</navigation>

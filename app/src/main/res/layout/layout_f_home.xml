@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fragMaps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/flStats"
+        android:background="@drawable/background_stats"
+        android:layout_width="101dp"
+        android:layout_marginTop="-3dp"
+        android:layout_height="30dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="50dp"
+            android:text="250"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="1dp"
+            android:background="@android:color/white"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="50dp"
+            android:text="300"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_red_light"
+            android:gravity="center"
+            android:layout_gravity="center_vertical|end"
+            android:layout_height="wrap_content" />
+
+    </FrameLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fabMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu_animationDelayPerItem="55"
+        app:menu_backgroundColor="@android:color/transparent"
+        app:menu_buttonSpacing="0dp"
+        app:menu_colorNormal="#da3c2f"
+        app:menu_colorPressed="#dc4b3f"
+        app:menu_colorRipple="#99d4d4d4"
+        app:menu_fab_size="normal"
+        app:menu_icon="@drawable/vector_add"
+        app:menu_labels_colorNormal="#333"
+        app:menu_labels_colorPressed="#444"
+        app:menu_labels_colorRipple="#66efecec"
+        app:menu_labels_cornerRadius="3dp"
+        app:menu_labels_ellipsize="none"
+        app:menu_labels_hideAnimation="@anim/fab_slide_out_to_right"
+        app:menu_labels_margin="0dp"
+        app:menu_labels_maxLines="-1"
+        app:menu_labels_padding="8dp"
+        app:menu_labels_position="left"
+        app:menu_labels_showAnimation="@anim/fab_slide_in_from_right"
+        app:menu_labels_showShadow="true"
+        app:menu_labels_singleLine="false"
+        app:menu_labels_textColor="#f2f1f1"
+        app:menu_labels_textSize="15sp"
+        app:menu_openDirection="up"
+        app:menu_shadowColor="#2CDA0000"
+        app:menu_shadowRadius="4dp"
+        app:menu_shadowXOffset="1dp"
+        app:menu_shadowYOffset="4dp"
+        app:menu_showShadow="true">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/imShop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vector_cart"
+            app:fab_label="Shop"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/imStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vector_stats"
+            app:fab_label="Stats"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/imMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/vector_more"
+            app:fab_label="About"
+            app:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>
+</androidx.constraintlayout.widget.ConstraintLayout>
