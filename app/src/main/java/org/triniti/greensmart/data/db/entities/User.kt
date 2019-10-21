@@ -1,4 +1,4 @@
-package org.triniti.greensmart.data.db.entities
+package org.triniti. greensmart.data.db.entities
 
 import android.text.TextUtils
 import android.util.Patterns
@@ -24,15 +24,15 @@ data class User(
 
     val isDataValid: Boolean
         get() = (!TextUtils.isEmpty(getMail()))
-                && Patterns.EMAIL_ADDRESS.matcher(getMail()).matches()
-                && getPass().length >= 6
+                && Patterns.EMAIL_ADDRESS.matcher(getMail().toString()).matches()
+                && getPass().toString().length >= 6
 
-    private fun getPass(): String {
-        return password!!
+    private fun getPass(): String? {
+        return password
     }
 
-    private fun getMail(): String {
-        return email!!
+    private fun getMail(): String? {
+        return email
     }
 
     fun setMail(email: String) {

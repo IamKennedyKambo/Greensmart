@@ -77,11 +77,11 @@ class Success : Fragment(), OnMapReadyCallback {
 
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         tbSuccess.setupWithNavController(findNavController())
-        tbSuccess.title = args.product.nm
+        tbSuccess.title = args.product.name
         addMenu(tbSuccess)
 
         Glide.with(context!!)
-            .load(args.product.im)
+            .load(args.product.imageUrl)
             .into(ivSuccess)
 
         tvTitle.setOnClickListener {

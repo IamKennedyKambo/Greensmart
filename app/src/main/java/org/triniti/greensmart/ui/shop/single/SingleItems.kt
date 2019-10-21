@@ -14,10 +14,10 @@ class SingleItems(private val product: Product, private val navController: NavCo
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         val view = viewHolder.itemView
-        view.tvName.text = product.nm
-        view.tvPrice.text = product.pr + " /= or " + product.po.toString() + "pts"
+        view.tvName.text = product.name
+        view.tvPrice.text = product.price + " /= or " + product.points.toString() + "pts"
         Glide.with(view.context)
-            .load(product.im)
+            .load(product.imageUrl)
             .into(view.ivProduct)
 
         view.clProduct.setOnClickListener {

@@ -66,6 +66,7 @@ class Signup : Fragment(), AuthResultCallback {
     override fun onSuccess(user: User?) {
         butCreate.visibility = View.VISIBLE
         lavAuthenticate.visibility = View.INVISIBLE
+        updateController()
         view!!.showSnackBar("Welcome ${user?.name}")
     }
 
@@ -73,5 +74,9 @@ class Signup : Fragment(), AuthResultCallback {
         butCreate.visibility = View.VISIBLE
         lavAuthenticate.visibility = View.GONE
         view!!.showSnackBar(message)
+    }
+
+    private fun updateController() {
+        findNavController().navigate(R.id.action_destination_signup_to_destination_home)
     }
 }

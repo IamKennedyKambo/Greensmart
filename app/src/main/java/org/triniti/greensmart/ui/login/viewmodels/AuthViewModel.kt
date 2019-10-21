@@ -49,19 +49,6 @@ class AuthViewModel(
 
     fun getCurrentUser() = repository.getUser()
 
-    fun onLoginButtonLongClicked(view: View) {
-        val user = User(
-            1,
-            "Kamble",
-            "kamble@gmail.com",
-            "kamble00",
-            "78518379701703",
-            "692316908716",
-            "8269299769816"
-        )
-        listener.onSuccess(user)
-    }
-
     fun onLoginButtonClicked(view: View) {
         listener.onStarted("Login started")
         if (!user.isDataValid) {

@@ -14,11 +14,11 @@ class CartItems(val product: Product, private val navController: NavController) 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         val view = viewHolder.itemView
         Glide.with(view.context)
-            .load(product.im)
+            .load(product.imageUrl)
             .into(view.ivProduct)
 
-        view.tvName.text = product.nm
-        view.tvPrice.text = product.po.toString()
+        view.tvName.text = product.name
+        view.tvPrice.text = product.points.toString()
 
         view.butClaim.setOnClickListener {
             val action = CartDirections.actionDestinationCartToDestinationSuccess(product)

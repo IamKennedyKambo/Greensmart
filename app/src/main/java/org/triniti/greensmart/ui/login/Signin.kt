@@ -47,10 +47,6 @@ class Signin : Fragment(), AuthResultCallback {
 
         ivLogo.setImageResource(R.mipmap.ic_launcher)
 
-        butLogin.setOnClickListener {
-            findNavController().navigate(R.id.destination_home)
-        }
-
         tvSignup.setOnClickListener {
             findNavController().navigate(R.id.action_destination_login_to_destination_signup)
         }
@@ -75,7 +71,6 @@ class Signin : Fragment(), AuthResultCallback {
     }
 
     private fun updateController() {
-        findNavController().navigate(R.id.destination_home)
-
+        findNavController().navigate(R.id.action_destination_login_to_destination_home)
     }
 }

@@ -46,11 +46,10 @@ class MainActivity : AppCompatActivity(), AuthResultCallback {
         navController = findNavController(this, R.id.container)
 
         authViewModel.getCurrentUser().observe(this, Observer { user ->
-//            if (user == null) {
-//                navController.navigate(R.id.destination_login)
-//            } else {
-//                navController.navigate(R.id.destination_home)
-//            }
+            if (user == null) {
+                navController.navigate(R.id.destination_login)
+            } else {
+            }
         })
     }
 

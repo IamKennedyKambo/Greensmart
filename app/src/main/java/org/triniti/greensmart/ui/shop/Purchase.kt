@@ -27,11 +27,11 @@ class Purchase : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         tbPurchase.setupWithNavController(findNavController())
-        tbPurchase.title = args.product.nm
+        tbPurchase.title = args.product.name
         addMenu(tbPurchase)
 
         Glide.with(context!!)
-            .load(args.product.im)
+            .load(args.product.imageUrl)
             .into(ivProduct)
 
         val actions = PurchaseDirections.actionDestinationPurchaseToDestinationSuccess(args.product)
