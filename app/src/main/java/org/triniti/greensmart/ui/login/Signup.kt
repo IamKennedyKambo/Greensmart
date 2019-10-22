@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -17,17 +16,12 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.db.databases.UserDatabase
 import org.triniti.greensmart.data.db.entities.User
-import org.triniti.greensmart.data.network.LoginApi
-import org.triniti.greensmart.data.network.NetworkConnectionInterceptor
-import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.databinding.LayoutFSignupBinding
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
 import org.triniti.greensmart.ui.login.viewmodels.AuthViewModel
 import org.triniti.greensmart.ui.login.viewmodels.AuthViewModelFactory
 import org.triniti.greensmart.utilities.showSnackBar
-import org.triniti.greensmart.utilities.showToast
 
 class Signup : Fragment(), AuthResultCallback, KodeinAware {
 

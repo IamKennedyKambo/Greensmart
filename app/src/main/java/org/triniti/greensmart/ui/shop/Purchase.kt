@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils.loadAnimation
+import android.view.animation.RotateAnimation
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,7 +22,7 @@ class Purchase : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.layout_f_purchase, container, false)
+        return inflater.inflate(org.triniti.greensmart.R.layout.layout_f_purchase, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,6 +35,14 @@ class Purchase : Fragment() {
         Glide.with(context!!)
             .load(args.product.imageUrl)
             .into(ivProduct)
+
+        butNext.setOnClickListener {
+
+        }
+
+//        val ranim = loadAnimation(context, R.anim.rotate) as RotateAnimation
+//        ranim.fillAfter = true //For the textview to remain at the same place after the rotation
+//        tvTitle.animation = ranim
 
         val actions = PurchaseDirections.actionDestinationPurchaseToDestinationSuccess(args.product)
 

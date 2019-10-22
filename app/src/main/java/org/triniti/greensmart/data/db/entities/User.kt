@@ -1,4 +1,4 @@
-package org.triniti. greensmart.data.db.entities
+package org.triniti.greensmart.data.db.entities
 
 import android.text.TextUtils
 import android.util.Patterns
@@ -10,13 +10,17 @@ const val CURRENT_USER_ID: Int = 0
 
 @Entity
 data class User(
-    var id: Int =0 ,
+    var id: Int? = null,
     var name: String? = null,
-    var email: String ? = null,
-    var password: String ? = null,
-    var email_verified_at: String ? = null,
-    var created_at: String ? = null,
-    var updated_at: String ? = null
+    var email: String? = null,
+    var password: String? = null,
+    var date_joined: String? = null,
+    var latitude: Double? = null,
+    var longitude: Double? = null,
+    var usable_points: Int? = null,
+    var available_points: Int? = null,
+    var level: Int? = null,
+    var cardId: String? = null
 ) : BaseObservable() {
 
     @PrimaryKey(autoGenerate = false)

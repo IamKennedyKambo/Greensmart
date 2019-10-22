@@ -13,11 +13,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.db.databases.UserDatabase
 import org.triniti.greensmart.data.db.entities.User
-import org.triniti.greensmart.data.network.LoginApi
-import org.triniti.greensmart.data.network.NetworkConnectionInterceptor
-import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.databinding.LayoutFLoginBinding
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
 import org.triniti.greensmart.ui.login.viewmodels.AuthViewModel
