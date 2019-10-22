@@ -7,17 +7,21 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import org.kodein.di.KodeinAware
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.databases.UserDatabase
 import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.data.network.LoginApi
+import org.triniti.greensmart.data.network.NetworkConnectionInterceptor
 import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
 import org.triniti.greensmart.ui.login.viewmodels.AuthViewModel
 import org.triniti.greensmart.ui.login.viewmodels.AuthViewModelFactory
 import org.triniti.greensmart.utilities.navigateUpOrFinish
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class MainActivity : AppCompatActivity(), AuthResultCallback {
+class MainActivity : AppCompatActivity(), AuthResultCallback, KodeinAware {
     override fun onStarted(message: String) {
 
     }
@@ -31,17 +35,17 @@ class MainActivity : AppCompatActivity(), AuthResultCallback {
     }
 
     private lateinit var navController: NavController
-    private lateinit var authViewModel: AuthViewModel
+    override val kodein by kodein()
 
+    private val factory : AuthViewModelFactory by instance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout_a_main)
 
-        val api = LoginApi()
-        val db = UserDatabase(this)
-        val repository = LoginRepository(api, db)
-        authViewModel = ViewModelProviders.of(this, AuthViewModelFactory(this, repository))
+       val authViewModel = ViewModelProviders.of(this, factory)
             .get(AuthViewModel::class.java)
+
+        authViewModel.listener = this
 
         navController = findNavController(this, R.id.container)
 

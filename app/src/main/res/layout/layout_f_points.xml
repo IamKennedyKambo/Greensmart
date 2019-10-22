@@ -62,14 +62,5 @@
         <androidx.viewpager.widget.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="match_parent"
-            android:textStyle="bold"
-            android:text="FEEDS/NEWS etc"
-            android:fontFamily="@font/montserrat"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:layout_height="match_parent"/>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

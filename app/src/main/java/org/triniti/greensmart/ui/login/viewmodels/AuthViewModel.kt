@@ -9,13 +9,13 @@ import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
 import org.triniti.greensmart.utilities.ApiExceptions
 import org.triniti.greensmart.utilities.Coroutines
+import org.triniti.greensmart.utilities.NoInternetException
 
 class AuthViewModel(
-    private val listener: AuthResultCallback,
     private val repository: LoginRepository
 ) : ViewModel() {
-    private val user: User =
-        User()
+    private val user: User = User()
+    var listener: AuthResultCallback? = null
 
     val emailTextWatcher: TextWatcher
         get() = object : TextWatcher {
@@ -50,24 +50,52 @@ class AuthViewModel(
     fun getCurrentUser() = repository.getUser()
 
     fun onLoginButtonClicked(view: View) {
-        listener.onStarted("Login started")
+        listener?.onStarted("Login started")
         if (!user.isDataValid) {
-            listener.onFailure("Invalid email or password")
+            listener?.onFailure("Invalid email or password")
             return
         }
 
         Coroutines.main {
             try {
-                val loginResponse = repository.userLogin(user.email!!, user.password!!)
-                loginResponse.user?.let {
-                    listener.onSuccess(it)
+                val authResponse = repository.userLogin(user.email!!, user.password!!)
+                authResponse.user?.let {
+                    listener?.onSuccess(it)
                     repository.saveUser(it)
                     return@main
                 }
 
-                listener.onFailure(loginResponse.message!!)
+                listener?.onFailure(authResponse.message!!)
             } catch (e: ApiExceptions) {
-                listener.onFailure(e.message!!)
+                listener?.onFailure(e.message!!)
+            } catch (n: NoInternetException) {
+                listener?.onFailure(n.message!!)
+            }
+        }
+    }
+
+    fun onSignUpButtonClicked(view: View) {
+        listener?.onStarted("Login started")
+        if (!user.isDataValid) {
+            listener?.onFailure("Invalid email or password")
+            return
+        }
+
+        Coroutines.main {
+            try {
+                val authResponse =
+                    repository.userSignUp(user.name!!, user.email!!, user.password!!)
+                authResponse.user?.let {
+                    listener?.onSuccess(it)
+                    repository.saveUser(it)
+                    return@main
+                }
+
+                listener?.onFailure(authResponse.message!!)
+            } catch (e: ApiExceptions) {
+                listener?.onFailure(e.message!!)
+            } catch (n: NoInternetException) {
+                listener?.onFailure(n.message!!)
             }
         }
     }

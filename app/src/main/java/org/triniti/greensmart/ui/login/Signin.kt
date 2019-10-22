@@ -9,10 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.layout_f_login.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.databases.UserDatabase
 import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.data.network.LoginApi
+import org.triniti.greensmart.data.network.NetworkConnectionInterceptor
 import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.databinding.LayoutFLoginBinding
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
@@ -20,9 +24,10 @@ import org.triniti.greensmart.ui.login.viewmodels.AuthViewModel
 import org.triniti.greensmart.ui.login.viewmodels.AuthViewModelFactory
 import org.triniti.greensmart.utilities.showSnackBar
 
-class Signin : Fragment(), AuthResultCallback {
+class Signin : Fragment(), AuthResultCallback, KodeinAware {
 
-    private lateinit var authViewModel: AuthViewModel
+    override val kodein by kodein()
+    private val factory: AuthViewModelFactory by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,11 +36,10 @@ class Signin : Fragment(), AuthResultCallback {
         val binding: LayoutFLoginBinding =
             DataBindingUtil.inflate(inflater, R.layout.layout_f_login, container, false)
 
-        val api = LoginApi()
-        val db = UserDatabase(context!!)
-        val repository = LoginRepository(api, db)
-        authViewModel = ViewModelProviders.of(this, AuthViewModelFactory(this, repository))
+        val authViewModel = ViewModelProviders.of(this, factory)
             .get(AuthViewModel::class.java)
+
+        authViewModel.listener = this
 
         binding.viewModel = authViewModel
 

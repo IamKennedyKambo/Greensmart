@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvTerms"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:padding="15dp"
-                android:onClick="@{viewModel::onLoginButtonClicked}"
+                android:onClick="@{viewModel::onSignUpButtonClicked}"
                 android:textColor="@color/text_color"
                 android:text="Create account"
                 android:layout_height="wrap_content" />

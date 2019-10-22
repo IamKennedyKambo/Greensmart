@@ -51,6 +51,9 @@ class Home : Fragment(), OnMapReadyCallback {
         bins.add(Bin(1, -1.354982, 36.657093))
         bins.add(Bin(1, -1.356044, 36.657055))
 
+        val latLng = LatLng(bins[0].lat, bins[0].lang)
+        p0?.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16f))
+
         convertbinToLatLng(bins, p0!!)
     }
 

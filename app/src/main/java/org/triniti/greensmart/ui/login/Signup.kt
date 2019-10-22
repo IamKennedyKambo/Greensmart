@@ -13,10 +13,14 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.layout_f_signup.*
 import kotlinx.android.synthetic.main.layout_f_signup.ivLogo
 import kotlinx.android.synthetic.main.layout_f_signup.lavAuthenticate
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.databases.UserDatabase
 import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.data.network.LoginApi
+import org.triniti.greensmart.data.network.NetworkConnectionInterceptor
 import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.databinding.LayoutFSignupBinding
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
@@ -25,10 +29,12 @@ import org.triniti.greensmart.ui.login.viewmodels.AuthViewModelFactory
 import org.triniti.greensmart.utilities.showSnackBar
 import org.triniti.greensmart.utilities.showToast
 
-class Signup : Fragment(), AuthResultCallback {
+class Signup : Fragment(), AuthResultCallback, KodeinAware {
 
     private lateinit var auth: FirebaseAuth
+    override val kodein by kodein()
 
+    private val factory: AuthViewModelFactory by instance()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,12 +43,12 @@ class Signup : Fragment(), AuthResultCallback {
         val binding: LayoutFSignupBinding =
             DataBindingUtil.inflate(inflater, R.layout.layout_f_signup, container, false)
 
-        val api = LoginApi()
-        val db = UserDatabase(context!!)
-        val repository = LoginRepository(api, db)
+        val authViewModel = ViewModelProviders.of(this, factory)
+            .get(AuthViewModel::class.java)
 
-        binding.viewModel =
-            ViewModelProviders.of(this, AuthViewModelFactory(this, repository)).get(AuthViewModel::class.java)
+        authViewModel.listener = this
+
+        binding.viewModel = authViewModel
         return binding.root
     }
 

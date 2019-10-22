@@ -6,9 +6,9 @@ import org.triniti.greensmart.data.repositories.LoginRepository
 import org.triniti.greensmart.ui.login.interfaces.AuthResultCallback
 
 @Suppress("UNCHECKED_CAST")
-class AuthViewModelFactory(private val listener: AuthResultCallback?, private val repository: LoginRepository) :
+class AuthViewModelFactory(private val repository: LoginRepository) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return listener?.let { AuthViewModel(it, repository) } as T
+        return AuthViewModel(repository) as T
     }
 }

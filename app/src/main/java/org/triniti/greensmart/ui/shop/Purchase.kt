@@ -36,12 +36,12 @@ class Purchase : Fragment() {
 
         val actions = PurchaseDirections.actionDestinationPurchaseToDestinationSuccess(args.product)
 
-        butPoints.setOnClickListener {
-            findNavController().navigate(actions)
-        }
-
-        butCash.setOnClickListener {
-            findNavController().navigate(actions)
-        }
+//        butPoints.setOnClickListener {
+//            findNavController().navigate(actions)
+//        }
+//
+//        butCash.setOnClickListener {
+//            findNavController().navigate(actions)
+//        }
     }
 }
