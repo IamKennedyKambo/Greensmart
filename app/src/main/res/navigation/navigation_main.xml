@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/destination_login"
-        android:name="org.triniti.greensmart.ui.login.Signin"
+        android:name="org.triniti.greensmart.ui.auth.Signin"
         android:label="main_fragment"
         tools:layout="@layout/layout_f_login" >
         <action
@@ -21,11 +21,11 @@
     </fragment>
     <fragment
         android:id="@+id/destination_home"
-        android:name="org.triniti.greensmart.ui.main.Home"
+        android:name="org.triniti.greensmart.ui.home.main.Home"
         android:label="Home" />
     <fragment
         android:id="@+id/destination_mall"
-        android:name="org.triniti.greensmart.ui.shop.mall.Mall"
+        android:name="org.triniti.greensmart.ui.home.shop.mall.Mall"
         android:label="Mall" >
         <action
             android:id="@+id/action_destination_mall_to_destination_single"
@@ -33,11 +33,11 @@
     </fragment>
     <fragment
         android:id="@+id/destination_map"
-        android:name="org.triniti.greensmart.ui.shop.Map"
+        android:name="org.triniti.greensmart.ui.home.shop.Map"
         android:label="Map" />
     <fragment
         android:id="@+id/destination_purchase"
-        android:name="org.triniti.greensmart.ui.shop.Purchase"
+        android:name="org.triniti.greensmart.ui.home.shop.Purchase"
         android:label="Purchase" >
         <argument
             android:name="product"
@@ -48,11 +48,11 @@
     </fragment>
     <fragment
         android:id="@+id/destination_settings"
-        android:name="org.triniti.greensmart.ui.main.settings.About"
+        android:name="org.triniti.greensmart.ui.home.main.settings.About"
         android:label="Settings" />
     <fragment
         android:id="@+id/destination_signup"
-        android:name="org.triniti.greensmart.ui.login.Signup"
+        android:name="org.triniti.greensmart.ui.auth.Signup"
         android:label="Signup" >
         <action
             android:id="@+id/action_destination_signup_to_destination_login"
@@ -60,13 +60,12 @@
         <action
             android:id="@+id/action_destination_signup_to_destination_home"
             app:destination="@id/destination_home"
-            app:launchSingleTop="false"
-            app:popUpTo="@+id/destination_home"
+            app:popUpTo="@+id/destination_signup"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/destination_single"
-        android:name="org.triniti.greensmart.ui.shop.single.Single"
+        android:name="org.triniti.greensmart.ui.home.shop.single.Single"
         android:label="Single" >
         <action
             android:id="@+id/action_destination_single_to_destination_purchase"
@@ -83,7 +82,7 @@
     </fragment>
     <fragment
         android:id="@+id/destination_success"
-        android:name="org.triniti.greensmart.ui.shop.Success"
+        android:name="org.triniti.greensmart.ui.home.shop.Success"
         android:label="Success" >
         <action
             android:id="@+id/action_destination_success_to_destination_cart"
@@ -94,11 +93,11 @@
     </fragment>
     <fragment
         android:id="@+id/destination_points"
-        android:name="org.triniti.greensmart.ui.main.Points"
+        android:name="org.triniti.greensmart.ui.home.main.Points"
         android:label="Points" />
     <fragment
         android:id="@+id/destination_cart"
-        android:name="org.triniti.greensmart.ui.shop.cart.Cart"
+        android:name="org.triniti.greensmart.ui.home.shop.cart.Cart"
         android:label="Cart" >
         <argument
             android:name="product"

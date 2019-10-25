@@ -1,28 +1,30 @@
 package org.triniti.greensmart.data.network
 
 import okhttp3.OkHttpClient
+import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.data.network.responses.AuthResponse
 import org.triniti.greensmart.data.network.responses.BinsResponse
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface GreenApi {
 
-    @FormUrlEncoded
-    @POST("login")
-    suspend fun userLogin(@Field("email") email: String, @Field("password") password: String): Response<AuthResponse>
+    @Headers("Content-Type:application/json")
+    @POST("users/login")
+    suspend fun userLogin(
+        @Body user: User
+    ): Response<AuthResponse>
 
-    @FormUrlEncoded
-    @POST("signup")
+    @Headers("Content-Type:application/json")
+    @POST("users")
     suspend fun userSignup(
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String
+        @Body user: User
     ): Response<AuthResponse>
 
     @GET("bins")
@@ -35,8 +37,9 @@ interface GreenApi {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl("localhost:3000/")
+                .baseUrl("http://139.59.25.172:3000/")
                 .client(client)
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(GreenApi::class.java)

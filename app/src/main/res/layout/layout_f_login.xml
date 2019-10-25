@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="org.triniti.greensmart.ui.login.viewmodels.AuthViewModel" />
+            type="org.triniti.greensmart.ui.auth.viewmodels.AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        tools:context=".ui.login.Signin">
+        tools:context=".ui.auth.Signin">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:inputType="textEmailAddress"
                     android:id="@+id/etEmail"
-                    app:addTextChangedListener="@{viewModel.emailTextWatcher}"
+                    android:text="@={viewModel.email}"
                     android:layout_height="match_parent" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,7 +82,7 @@
                     android:layout_width="match_parent"
                     android:id="@+id/etPassword"
                     android:inputType="textPassword"
-                    app:addTextChangedListener="@{viewModel.passwordTextWatcher}"
+                    android:text="@={viewModel.password}"
                     android:layout_height="match_parent" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,7 +117,7 @@
                 app:lottie_rawRes="@raw/loader"
                 app:layout_constraintTop_toTopOf="@id/butLogin"
                 app:layout_constraintBottom_toBottomOf="@id/butLogin"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSignup"
