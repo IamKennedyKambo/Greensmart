@@ -22,6 +22,12 @@ class AuthRepository(private val api: GreenApi, private val db: AppDatabase) : S
         }
     }
 
+    suspend fun userUpdate(user: User): AuthResponse{
+        return apiRequest {
+            api.userUpdate(user.id!!, user)
+        }
+    }
+
     suspend fun saveUser(user: User) = db.getUserDao().upsert(user)
 
     fun getUser() = db.getUserDao().getUser()

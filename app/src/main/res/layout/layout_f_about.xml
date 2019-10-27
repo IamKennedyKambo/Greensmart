@@ -1,95 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <data>
+        <variable
+            name="viewModel"
+            type="org.triniti.greensmart.ui.home.about.AboutViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        app:layout_constraintHeight_percent=".33"
-        android:id="@+id/clHeader"
-        android:padding="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/lightGrey"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:id="@+id/ivBack"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/vector_back"
-            android:layout_marginTop="6dp"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="6dp"
-            android:text="Profile"
-            android:textSize="20sp"
-            android:fontFamily="@font/montserrat"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <com.github.abdularis.civ.CircleImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="100dp"
-            android:src="@mipmap/ic_launcher"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="20dp"
-            app:strokeColor="@android:color/white"
-            app:strokeWidth="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias=".45"
-            android:layout_height="100dp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvName"
-            android:text="Eric Munene"
-            android:layout_marginStart="16dp"
-            android:fontFamily="@font/montserrat"
-            android:layout_width="wrap_content"
-            app:layout_constraintStart_toEndOf="@id/ivProfile"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias=".55"
-            android:textStyle="bold"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:id="@+id/tvLocation"
-            android:text="Rongai, Nairobi"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toEndOf="@id/ivProfile"
-            app:layout_constraintTop_toBottomOf="@id/tvName"
-            android:layout_height="wrap_content" />
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:id="@+id/tvAbout"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:textStyle="bold"
-            android:fontFamily="@font/montserrat"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintTop_toBottomOf="@id/ivProfile"
-            android:text="Student at Multimedia University of Kenya\nLoves coke and milk shakes"
-            android:layout_height="wrap_content" />
+            app:layout_constraintHeight_percent=".33"
+            android:id="@+id/clHeader"
+            android:padding="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/lightGrey"
+            android:layout_height="0dp">
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:id="@+id/ivBack"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/vector_back"
+                android:layout_marginTop="6dp"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="6dp"
+                android:text="Profile"
+                android:textSize="20sp"
+                android:fontFamily="@font/montserrat"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.github.abdularis.civ.CircleImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="100dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginStart="20dp"
+                app:strokeColor="@android:color/white"
+                app:strokeWidth="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias=".45"
+                android:layout_height="100dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvName"
+                android:text="@{viewModel.user.name}"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/montserrat"
+                android:layout_width="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/ivProfile"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias=".45"
+                android:textStyle="bold"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvLocation"
+                android:text="@{viewModel.user.email}"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat"
+                android:layout_marginStart="16dp"
+                app:layout_constraintStart_toEndOf="@id/ivProfile"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                android:layout_height="wrap_content" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:id="@+id/tvAbout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textStyle="bold"
+                android:fontFamily="@font/montserrat"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toBottomOf="@id/ivProfile"
+                android:text="@{viewModel.user.about}"
+                android:layout_height="wrap_content" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/rvSetting"
+            app:layout_constraintTop_toBottomOf="@id/clHeader"
+            android:layout_height="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:id="@+id/rvSetting"
-        app:layout_constraintTop_toBottomOf="@id/clHeader"
-        android:layout_height="0dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

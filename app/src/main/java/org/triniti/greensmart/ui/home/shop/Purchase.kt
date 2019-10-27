@@ -10,16 +10,18 @@ import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_f_purchase.*
+import org.triniti.greensmart.R
 import org.triniti.greensmart.utilities.addMenu
 
 class Purchase : Fragment() {
     private val args: PurchaseArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(org.triniti.greensmart.R.layout.layout_f_purchase, container, false)
+        return inflater.inflate(R.layout.layout_f_purchase, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,16 +32,8 @@ class Purchase : Fragment() {
         addMenu(tbPurchase)
 
         Glide.with(context!!)
-            .load(args.product.imageUrl)
+            .load(args.product.image)
             .into(ivProduct)
-
-        butNext.setOnClickListener {
-
-        }
-
-//        val ranim = loadAnimation(context, R.anim.rotate) as RotateAnimation
-//        ranim.fillAfter = true //For the textview to remain at the same place after the rotation
-//        tvTitle.animation = ranim
 
         val actions = PurchaseDirections.actionDestinationPurchaseToDestinationSuccess(args.product)
 
@@ -49,6 +43,5 @@ class Purchase : Fragment() {
 //
 //        butCash.setOnClickListener {
 //            findNavController().navigate(actions)
-//        }
     }
 }

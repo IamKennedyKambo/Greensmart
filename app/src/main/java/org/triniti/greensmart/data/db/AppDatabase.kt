@@ -5,15 +5,22 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.triniti.greensmart.data.db.daos.BinsDao
+import org.triniti.greensmart.data.db.daos.ShopDao
 import org.triniti.greensmart.data.db.daos.UserDao
 import org.triniti.greensmart.data.db.entities.Bin
+import org.triniti.greensmart.data.db.entities.Shop
 import org.triniti.greensmart.data.db.entities.User
 
-@Database(entities = [User::class, Bin::class], version = 2, exportSchema = false)
+@Database(
+    entities = [User::class, Bin::class, Shop::class],
+    version = 2,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getUserDao(): UserDao
     abstract fun getBinsDao(): BinsDao
+    abstract fun getShopDao(): ShopDao
 
     companion object {
 

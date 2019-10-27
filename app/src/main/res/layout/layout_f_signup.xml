@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="org.triniti.greensmart.ui.auth.viewmodels.AuthViewModel" />
+            type="org.triniti.greensmart.ui.auth.AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.auth.Signin">
+        tools:context=".ui.auth.fragments.Signin">
 
         <FrameLayout
             android:layout_width="match_parent"

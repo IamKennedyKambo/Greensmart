@@ -10,24 +10,11 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.db.entities.User
-import org.triniti.greensmart.ui.auth.interfaces.AuthListener
-import org.triniti.greensmart.ui.auth.viewmodels.AuthViewModel
-import org.triniti.greensmart.ui.auth.viewmodels.AuthViewModelFactory
+import org.triniti.greensmart.ui.auth.AuthViewModel
+import org.triniti.greensmart.ui.auth.AuthViewModelFactory
 import org.triniti.greensmart.utilities.navigateUpOrFinish
 
-class MainActivity : AppCompatActivity(), AuthListener, KodeinAware {
-    override fun onStarted() {
-
-    }
-
-    override fun onSuccess(user: User?) {
-
-    }
-
-    override fun onFailure(message: String) {
-
-    }
+class MainActivity : AppCompatActivity(), KodeinAware {
 
     private lateinit var navController: NavController
     override val kodein by kodein()
@@ -40,15 +27,11 @@ class MainActivity : AppCompatActivity(), AuthListener, KodeinAware {
         val authViewModel = ViewModelProviders.of(this, factory)
             .get(AuthViewModel::class.java)
 
-        authViewModel.authListener = this
-
         navController = findNavController(this, R.id.container)
 
         authViewModel.getLoggedInUser().observe(this, Observer { user ->
-            if (user == null) {
+            if (user == null)
                 navController.navigate(R.id.destination_login)
-            } else {
-            }
         })
     }
 

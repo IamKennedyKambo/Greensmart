@@ -25,7 +25,6 @@ import org.triniti.greensmart.utilities.addMenu
 
 class Success : Fragment(), OnMapReadyCallback {
 
-    private val args: SuccessArgs by navArgs()
     override fun onMapReady(p0: GoogleMap) {
         val milele = LatLng(-1.358040, 36.656764)
         val naivas = LatLng(-1.361926, 36.655183)
@@ -77,12 +76,12 @@ class Success : Fragment(), OnMapReadyCallback {
 
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         tbSuccess.setupWithNavController(findNavController())
-        tbSuccess.title = args.product.name
+//        tbSuccess.title = args.items.name
         addMenu(tbSuccess)
 
-        Glide.with(context!!)
-            .load(args.product.imageUrl)
-            .into(ivSuccess)
+//        Glide.with(context!!)
+//            .load(args.items.image)
+//            .into(ivSuccess)
 
         tvTitle.setOnClickListener {
             sheetBehavior.state =

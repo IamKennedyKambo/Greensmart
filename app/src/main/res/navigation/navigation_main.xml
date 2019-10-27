@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/destination_login"
-        android:name="org.triniti.greensmart.ui.auth.Signin"
+        android:name="org.triniti.greensmart.ui.auth.fragments.Signin"
         android:label="main_fragment"
-        tools:layout="@layout/layout_f_login" >
+        tools:layout="@layout/layout_f_login">
         <action
             android:id="@+id/action_destination_login_to_destination_signup"
             app:destination="@id/destination_signup" />
@@ -21,15 +21,15 @@
     </fragment>
     <fragment
         android:id="@+id/destination_home"
-        android:name="org.triniti.greensmart.ui.home.main.Home"
+        android:name="org.triniti.greensmart.ui.home.bins.Bins"
         android:label="Home" />
     <fragment
         android:id="@+id/destination_mall"
         android:name="org.triniti.greensmart.ui.home.shop.mall.Mall"
-        android:label="Mall" >
+        android:label="Mall">
         <action
             android:id="@+id/action_destination_mall_to_destination_single"
-            app:destination="@id/destination_single" />
+            app:destination="@id/destination_shop" />
     </fragment>
     <fragment
         android:id="@+id/destination_map"
@@ -38,72 +38,61 @@
     <fragment
         android:id="@+id/destination_purchase"
         android:name="org.triniti.greensmart.ui.home.shop.Purchase"
-        android:label="Purchase" >
-        <argument
-            android:name="product"
-            app:argType="org.triniti.greensmart.data.pojos.Product" />
+        android:label="Purchase">
+
         <action
             android:id="@+id/action_destination_purchase_to_destination_success"
             app:destination="@id/destination_success" />
+        <argument
+            android:name="product"
+            app:argType="org.triniti.greensmart.data.db.entities.Items" />
     </fragment>
     <fragment
         android:id="@+id/destination_settings"
-        android:name="org.triniti.greensmart.ui.home.main.settings.About"
+        android:name="org.triniti.greensmart.ui.home.about.About"
         android:label="Settings" />
     <fragment
         android:id="@+id/destination_signup"
-        android:name="org.triniti.greensmart.ui.auth.Signup"
-        android:label="Signup" >
+        android:name="org.triniti.greensmart.ui.auth.fragments.Signup"
+        android:label="Signup">
         <action
             android:id="@+id/action_destination_signup_to_destination_login"
             app:destination="@id/destination_login" />
         <action
             android:id="@+id/action_destination_signup_to_destination_home"
-            app:destination="@id/destination_home"
-            app:popUpTo="@+id/destination_signup"
-            app:popUpToInclusive="true" />
+            app:destination="@id/destination_home" />
     </fragment>
     <fragment
-        android:id="@+id/destination_single"
-        android:name="org.triniti.greensmart.ui.home.shop.single.Single"
-        android:label="Single" >
-        <action
-            android:id="@+id/action_destination_single_to_destination_purchase"
-            app:destination="@id/destination_purchase" />
-        <argument
-            android:name="shopId"
-            app:argType="string" />
+        android:id="@+id/destination_shop"
+        android:name="org.triniti.greensmart.ui.home.shop.single.Products"
+        android:label="Shop">
         <argument
             android:name="shopName"
             app:argType="string" />
         <argument
-            android:name="shop"
-            app:argType="org.triniti.greensmart.data.pojos.Shop" />
+            android:name="shopId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_destination_single_to_destination_purchase"
+            app:destination="@id/destination_purchase" />
     </fragment>
     <fragment
         android:id="@+id/destination_success"
         android:name="org.triniti.greensmart.ui.home.shop.Success"
-        android:label="Success" >
+        android:label="Success">
         <action
             android:id="@+id/action_destination_success_to_destination_cart"
             app:destination="@id/destination_cart" />
         <argument
             android:name="product"
-            app:argType="org.triniti.greensmart.data.pojos.Product" />
+            app:argType="org.triniti.greensmart.data.db.entities.Items" />
     </fragment>
     <fragment
         android:id="@+id/destination_points"
-        android:name="org.triniti.greensmart.ui.home.main.Points"
+        android:name="org.triniti.greensmart.ui.home.stats.Points"
         android:label="Points" />
     <fragment
         android:id="@+id/destination_cart"
-        android:name="org.triniti.greensmart.ui.home.shop.cart.Cart"
-        android:label="Cart" >
-        <argument
-            android:name="product"
-            app:argType="org.triniti.greensmart.data.pojos.Product" />
-        <action
-            android:id="@+id/action_destination_cart_to_destination_success"
-            app:destination="@id/destination_success" />
-    </fragment>
+        android:name="org.triniti.greensmart.ui.home.cart.Cart"
+        android:label="Cart"></fragment>
 </navigation>

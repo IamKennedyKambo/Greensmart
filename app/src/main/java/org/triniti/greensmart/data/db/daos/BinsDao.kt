@@ -12,6 +12,9 @@ interface BinsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveBins(bins: List<Bin>)
 
-    @Query("select * from bin ")
+    @Query("delete from bin")
+    suspend fun clearBins()
+
+    @Query("select * from bin")
     fun getBins(): LiveData<List<Bin>>
 }
