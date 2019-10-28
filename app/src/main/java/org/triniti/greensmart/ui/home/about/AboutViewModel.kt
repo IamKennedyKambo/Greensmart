@@ -2,11 +2,9 @@ package org.triniti.greensmart.ui.home.about
 
 import android.content.Context
 import android.location.Geocoder
-import android.view.View
 import androidx.lifecycle.ViewModel
 import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.data.repositories.AuthRepository
-import org.triniti.greensmart.ui.home.bins.Complete
 import org.triniti.greensmart.ui.home.bins.OnCompletionListener
 import org.triniti.greensmart.utilities.Coroutines
 
@@ -28,7 +26,7 @@ class AboutViewModel(private val repository: AuthRepository) : ViewModel() {
     fun updateUser(user: User) {
         Coroutines.main {
             val authResponse = repository.userUpdate(user)
-            authResponse.user?.let {
+            authResponse.user.apply {
                 listener?.onCompletion(user)
             }
         }

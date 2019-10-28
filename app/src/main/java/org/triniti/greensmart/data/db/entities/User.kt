@@ -19,7 +19,7 @@ data class User(
     var usable_points: Int? = 0,
     var available_points: Int? = 0,
     var level: Int? = 1,
-    var cardId: String? = ""
+    var cardId: String = ""
 ) : BaseObservable() {
 
     @PrimaryKey(autoGenerate = false)

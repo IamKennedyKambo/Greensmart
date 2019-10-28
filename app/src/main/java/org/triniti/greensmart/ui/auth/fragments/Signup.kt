@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.layout_f_signup.*
-import kotlinx.android.synthetic.main.layout_f_signup.ivLogo
-import kotlinx.android.synthetic.main.layout_f_signup.lavAuthenticate
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -63,7 +61,6 @@ class Signup : Fragment(), AuthListener, KodeinAware {
         butCreate.visibility = View.VISIBLE
         lavAuthenticate.visibility = View.INVISIBLE
         updateController()
-        findNavController().navigate(R.id.action_destination_signup_to_destination_home)
         view!!.showSnackBar("Welcome ${user?.name}")
     }
 

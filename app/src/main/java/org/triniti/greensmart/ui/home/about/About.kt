@@ -78,7 +78,7 @@ class About : Fragment(), KodeinAware {
             AboutItem(
                 Setting(
                     "Sponsors",
-                    context!!.getDrawable(R.drawable.vector_smiley)!!
+                    context!!.getDrawable(R.drawable.vector_sponsors)!!
                 )
             )
         )
@@ -86,7 +86,16 @@ class About : Fragment(), KodeinAware {
             AboutItem(
                 Setting(
                     "About us",
-                    context!!.getDrawable(R.drawable.vector_web)!!
+                    context!!.getDrawable(R.drawable.vector_about)!!
+                )
+            )
+        )
+
+        settings.add(
+            AboutItem(
+                Setting(
+                    "Join collectors",
+                    context!!.getDrawable(R.drawable.vector_signup)!!
                 )
             )
         )

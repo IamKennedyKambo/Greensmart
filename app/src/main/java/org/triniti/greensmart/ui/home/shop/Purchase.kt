@@ -35,13 +35,20 @@ class Purchase : Fragment() {
             .load(args.product.image)
             .into(ivProduct)
 
-        val actions = PurchaseDirections.actionDestinationPurchaseToDestinationSuccess(args.product)
+//        val actions = PurchaseDirections.actionDestinationPurchaseToDestinationSuccess(args.product)
 
-//        butPoints.setOnClickListener {
-//            findNavController().navigate(actions)
-//        }
-//
-//        butCash.setOnClickListener {
-//            findNavController().navigate(actions)
+        tvDescription.text = args.product.description
+
+        butNext.setOnClickListener {
+            vfPurchase.setInAnimation(context!!, R.anim.slide_in_right)
+            vfPurchase.setOutAnimation(context!!, R.anim.slide_out_left)
+            vfPurchase.showNext()
+        }
+
+        butPrev.setOnClickListener {
+            vfPurchase.setInAnimation(context!!, android.R.anim.slide_in_left)
+            vfPurchase.setOutAnimation(context!!, android.R.anim.slide_out_right)
+            vfPurchase.showPrevious()
+        }
     }
 }

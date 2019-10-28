@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.setupWithNavController
-import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -41,11 +39,11 @@ class Success : Fragment(), OnMapReadyCallback {
         val bounds = builder.build()
 
         //get width and height to current display screen
-        val width = resources.displayMetrics.widthPixels
-        val height = resources.displayMetrics.heightPixels
+//        val width = resources.displayMetrics.widthPixels
+//        val height = resources.displayMetrics.heightPixels
 
         // 20% padding
-        val padding = (width * 0.20).toInt()
+//        val padding = (width * 0.20).toInt()
 
         //set latlong bounds
         p0.setLatLngBoundsForCameraTarget(bounds)
@@ -76,11 +74,11 @@ class Success : Fragment(), OnMapReadyCallback {
 
         sheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         tbSuccess.setupWithNavController(findNavController())
-//        tbSuccess.title = args.items.name
+//        tbSuccess.title = args.product.name
         addMenu(tbSuccess)
 
 //        Glide.with(context!!)
-//            .load(args.items.image)
+//            .load(args.product.image)
 //            .into(ivSuccess)
 
         tvTitle.setOnClickListener {

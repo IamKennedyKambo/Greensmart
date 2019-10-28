@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         val authViewModel = ViewModelProviders.of(this, factory)
             .get(AuthViewModel::class.java)
 
-        navController = findNavController(this, R.id.container)
+        navController = findNavController(this, R.id.fragHome)
 
         authViewModel.getLoggedInUser().observe(this, Observer { user ->
             if (user == null)

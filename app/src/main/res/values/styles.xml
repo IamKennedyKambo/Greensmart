@@ -7,7 +7,7 @@
         <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-<!--        <items name="colorPrimaryDark">@color/colorPrimaryDark</items>-->
+<!--        <product name="colorPrimaryDark">@color/colorPrimaryDark</product>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowDisablePreview">true</item>
 <!--        <item name="android:navigationBarColor">#60000000</item>-->

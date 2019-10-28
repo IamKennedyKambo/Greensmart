@@ -23,7 +23,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.databinding.LayoutFHomeBinding
 import org.triniti.greensmart.ui.auth.AuthViewModel
 import org.triniti.greensmart.ui.auth.AuthViewModelFactory
@@ -36,11 +35,7 @@ import org.triniti.greensmart.utilities.setUpFragmentMap
 
 
 class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener, OnCompletionListener {
-
-    override fun onCompletion(user: User) {
-        authViewModel.saveUser(user)
-    }
+    GoogleApiClient.OnConnectionFailedListener {
 
     private var mMap: GoogleMap? = null
     override val kodein by kodein()
@@ -55,9 +50,9 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         googleMap.setOnCameraMoveStartedListener { reasonCode ->
-            if (reasonCode == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
-
-            }
+//            if (reasonCode == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+//
+//            }
         }
 
         val listener = object : GetLatLng {
@@ -120,6 +115,7 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
                 if (cardId != null) {
                     if (cardId.isEmpty() || cardId.isBlank())
                         Complete().show(childFragmentManager, "Completion")
+
                 }
             }
         })

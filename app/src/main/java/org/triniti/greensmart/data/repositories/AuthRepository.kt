@@ -22,7 +22,7 @@ class AuthRepository(private val api: GreenApi, private val db: AppDatabase) : S
         }
     }
 
-    suspend fun userUpdate(user: User): AuthResponse{
+    suspend fun userUpdate(user: User): AuthResponse {
         return apiRequest {
             api.userUpdate(user.id!!, user)
         }

@@ -1,5 +1,5 @@
 package org.triniti.greensmart.data.network.responses
 
-import org.triniti.greensmart.data.db.entities.Items
+import org.triniti.greensmart.data.db.entities.Product
 
-data class ProductsResponse(val isSuccessful: Boolean?, val items: List<Items>?)
+data class ProductsResponse(val isSuccessful: Boolean?, val items: List<Product>?)

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.triniti.greensmart.data.db.entities.Items
+import org.triniti.greensmart.data.db.entities.Product
 import org.triniti.greensmart.data.network.GreenApi
 import org.triniti.greensmart.data.network.SafeApiCall
 
@@ -12,7 +12,7 @@ class ProductsRepository(
     private val api: GreenApi
 ) : SafeApiCall() {
 
-    private val items = MutableLiveData<List<Items>>()
+    private val items = MutableLiveData<List<Product>>()
 
     private suspend fun fetchItems(id: Int) {
         try {
@@ -25,7 +25,7 @@ class ProductsRepository(
         }
     }
 
-    suspend fun getItems(id: Int): LiveData<List<Items>> {
+    suspend fun getItems(id: Int): LiveData<List<Product>> {
         return withContext(Dispatchers.IO) {
             fetchItems(id)
             items

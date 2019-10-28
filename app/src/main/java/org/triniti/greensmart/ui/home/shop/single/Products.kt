@@ -20,11 +20,9 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.db.entities.Items
+import org.triniti.greensmart.data.db.entities.Product
 import org.triniti.greensmart.utilities.Coroutines
 import org.triniti.greensmart.utilities.addMenu
-import org.triniti.greensmart.utilities.showSnackBar
-import org.triniti.greensmart.utilities.showToast
 
 
 class Products : Fragment(), KodeinAware {
@@ -73,7 +71,7 @@ class Products : Fragment(), KodeinAware {
         }
     }
 
-    private fun List<Items>.toSingleItems(): List<ProductsItems> {
+    private fun List<Product>.toSingleItems(): List<ProductsItems> {
         return map {
             ProductsItems(it, findNavController())
         }
