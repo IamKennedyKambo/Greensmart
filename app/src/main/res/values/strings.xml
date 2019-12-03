@@ -11,6 +11,26 @@
     <string name="billed">Billed</string>
     <string name="unit_cost">Unit cost</string>
     <string name="your_points">Your points</string>
+    <string name="times">*</string>
+    <string name="locate_shops">Locate shops</string>
+    <string name="one">1</string>
+    <string name="profile">Profile</string>
+    <string name="claim">CLAIM</string>
+    <string name="delete">delete</string>
+    <string name="one_placeholder">1</string>
+    <string name="before_you_start">Before you start...</string>
+    <string name="cardid_prompt">Please enter the unique identification number on the card provided by our agents into the text field below. We will use this card to award you points after you dispose into our bins.</string>
+    <string name="enter_card_id">Enter card Id</string>
+    <string name="done">Done</string>
+    <string name="insufficient_points">Insufficient points, cannot purchase!</string>
+    <string name="insufficient_todo">Try lowering the order size or pay with cash.</string>
+    <string name="got_it">Got It</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="description">Description</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

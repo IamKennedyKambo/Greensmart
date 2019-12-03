@@ -15,10 +15,10 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import kotlinx.android.synthetic.main.layout_f_points.*
+import kotlinx.android.synthetic.main.layout_f_loyalty.*
 import org.triniti.greensmart.R
 
-class Points : Fragment() {
+class Loyalty : Fragment() {
     private val yData = floatArrayOf(25.3f, 74.7f)
     private val xData = arrayOf("Mitch", "Jessica")
 
@@ -28,7 +28,7 @@ class Points : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(
-            R.layout.layout_f_points,
+            R.layout.layout_f_loyalty,
             container,
             false
         )

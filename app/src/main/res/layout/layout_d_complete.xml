@@ -5,7 +5,7 @@
 
         <variable
             name="listener"
-            type="org.triniti.greensmart.ui.home.bins.Complete" />
+            type="org.triniti.greensmart.ui.home.complete.Complete" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/assistant"
-            android:text="Before you start..."
+            android:text="@string/before_you_start"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             android:fontFamily="@font/assistant"
             android:gravity="start"
             android:textSize="18sp"
-            android:text="Please enter the unique identification number on the card provided by our agents into the text field below. We will use this card to award you points after you dispose into our bins."
+            android:text="@string/cardid_prompt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
@@ -52,14 +52,14 @@
                 android:id="@+id/etCard"
                 android:inputType="number"
                 android:fontFamily="@font/assistant"
-                android:hint="Enter card Id"
+                android:hint="@string/enter_card_id"
                 android:layout_height="match_parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Done"
+            android:text="@string/done"
             android:layout_marginTop="12dp"
             app:iconSize="12dp"
             app:iconGravity="end"

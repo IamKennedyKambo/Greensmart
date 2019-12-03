@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="#fff678"
     android:orientation="vertical"
-    app:cardCornerRadius="6dp"
     app:cardElevation="12dp"
+    app:cardCornerRadius="0dp"
     app:cardBackgroundColor="#2196F3"
     app:behavior_hideable="false"
     android:animateLayoutChanges="true"
@@ -16,7 +16,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
-        android:text="Locate shops"
+        android:text="@string/locate_shops"
         android:textColor="@android:color/white"
         android:gravity="center"
         android:id="@+id/tvTitle"
@@ -51,6 +51,5 @@
             android:padding="10dp"
             android:rotation="-270"
             android:layout_height="wrap_content" />
-
     </FrameLayout>
 </androidx.cardview.widget.CardView>

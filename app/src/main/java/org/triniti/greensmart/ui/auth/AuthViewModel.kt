@@ -3,14 +3,18 @@ package org.triniti.greensmart.ui.auth
 import android.util.Patterns
 import android.view.View
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.common.api.ApiException
 import org.triniti.greensmart.data.db.entities.User
+import org.triniti.greensmart.data.preferences.PreferenceProvider
 import org.triniti.greensmart.data.repositories.AuthRepository
+import org.triniti.greensmart.utilities.ApiExceptions
 import org.triniti.greensmart.utilities.Coroutines
 import org.triniti.greensmart.utilities.NoInternetException
+import java.net.ConnectException
+import java.net.SocketTimeoutException
 
 class AuthViewModel(
-    private val repository: AuthRepository
+    private val repository: AuthRepository,
+    private val prefs: PreferenceProvider
 ) : ViewModel() {
     var authListener: AuthListener? = null
     var name: String? = null
@@ -19,7 +23,7 @@ class AuthViewModel(
 
     fun getLoggedInUser() = repository.getUser()
 
-    fun saveUser(user: User){
+    fun saveUser(user: User) {
         Coroutines.main {
             repository.saveUser(user)
         }
@@ -32,12 +36,12 @@ class AuthViewModel(
             return
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()) {
             authListener?.onFailure("Invalid email")
             return
         }
 
-        if (password!!.length < 6){
+        if (password!!.length < 6) {
             authListener?.onFailure("Password is too short.")
             return
         }
@@ -48,16 +52,20 @@ class AuthViewModel(
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
                     repository.saveUser(it)
+                    prefs.saveUserId(it.id!!)
                     return@main
                 }
                 authListener?.onFailure(authResponse.message!!)
-            } catch (e: ApiException) {
-                authListener?.onFailure(e.message!!)
-            } catch (e: NoInternetException) {
-                authListener?.onFailure(e.message!!)
+            } catch (c: ApiExceptions) {
+                authListener?.onFailure(c.message!!)
+            } catch (f: NoInternetException) {
+                authListener?.onFailure(f.message!!)
+            } catch (g: SocketTimeoutException) {
+                authListener?.onFailure("Account not found.")
+            } catch (f: ConnectException) {
+                authListener?.onFailure("Server error, please try again later")
             }
         }
-
     }
 
 
@@ -79,12 +87,12 @@ class AuthViewModel(
             return
         }
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()) {
             authListener?.onFailure("Invalid email")
             return
         }
 
-        if (password!!.length < 6){
+        if (password!!.length < 6) {
             authListener?.onFailure("Password is too short.")
             return
         }
@@ -95,13 +103,16 @@ class AuthViewModel(
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
                     repository.saveUser(it)
+                    prefs.saveUserId(it.id!!)
                     return@main
                 }
                 authListener?.onFailure(authResponse.message!!)
-            } catch (e: ApiException) {
-                authListener?.onFailure(e.message!!)
+            } catch (a: ApiExceptions) {
+                authListener?.onFailure(a.message!!)
             } catch (e: NoInternetException) {
                 authListener?.onFailure(e.message!!)
+            } catch (f: ConnectException) {
+                authListener?.onFailure("Server error, please try again later")
             }
         }
     }

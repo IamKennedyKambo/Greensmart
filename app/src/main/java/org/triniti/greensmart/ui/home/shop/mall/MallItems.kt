@@ -7,8 +7,6 @@ import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.layout_c_malls.view.*
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.entities.Shop
-import org.triniti.greensmart.ui.home.shop.single.ProductsViewModel
-import org.triniti.greensmart.utilities.showToast
 
 class MallItems(
     val shop: Shop,
@@ -26,7 +24,10 @@ class MallItems(
 
         viewHolder.itemView.clParent.setOnClickListener {
             val action =
-                MallDirections.actionDestinationMallToDestinationSingle(shop.name, shop.id.toInt())
+                MallDirections.actionDestinationMallToDestinationProducts(
+                    shop.name,
+                    shop.id.toInt()
+                )
             navController.navigate(action)
         }
     }

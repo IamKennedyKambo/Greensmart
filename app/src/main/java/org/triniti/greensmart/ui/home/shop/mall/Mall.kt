@@ -18,12 +18,9 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.entities.Shop
-import org.triniti.greensmart.ui.home.shop.single.ProductsViewModel
-import org.triniti.greensmart.ui.home.shop.single.ProductsViewModelFactory
 import org.triniti.greensmart.utilities.Coroutines
 import org.triniti.greensmart.utilities.addMenu
 import org.triniti.greensmart.utilities.calculateNoOfColumns
-import org.triniti.greensmart.utilities.showToast
 
 class Mall : Fragment(), KodeinAware {
 
@@ -53,10 +50,12 @@ class Mall : Fragment(), KodeinAware {
     }
 
     private fun bindUI() = Coroutines.main {
-        mallViewModel.shops.await().observe(this, Observer {
-            setUpRecyclerView(it.toMallItems())
+        mallViewModel.shops.await().observe(viewLifecycleOwner, Observer {
+            if (it != null)
+                setUpRecyclerView(it.toMallItems())
         })
     }
+
 
     private fun setUpRecyclerView(shops: List<MallItems>) {
         val groupAdapter = GroupAdapter<ViewHolder>().apply {

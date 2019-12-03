@@ -15,6 +15,7 @@
     <org.triniti.greensmart.ui.widgets.AutoFitGridRecyclerView
         android:layout_width="match_parent"
         android:id="@+id/rvMall"
+        android:layoutAnimation="@anim/grid_animation"
         android:layout_height="match_parent" />
 
 </LinearLayout>

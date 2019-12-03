@@ -30,7 +30,7 @@ class MallRepository(
     }
 
     private suspend fun fetchShops() {
-        val lastSavedAt = prefs.getLastSavedAt()
+        val lastSavedAt = prefs.getMallsSavedAt()
 
         if (lastSavedAt == null || isFetchNeeded(LocalDateTime.parse(lastSavedAt))) {
             try {
@@ -51,13 +51,13 @@ class MallRepository(
 
     private fun saveShops(list: List<Shop>) {
         Coroutines.io {
-            prefs.savelastSavedAt(LocalDateTime.now().toString())
+            prefs.mallsLastSavedAt(LocalDateTime.now().toString())
             db.getShopDao().saveShops(list)
         }
     }
 
     private fun isFetchNeeded(savedAt: LocalDateTime): Boolean {
-        return ChronoUnit.SECONDS.between(savedAt, LocalDateTime.now()) > MINIMUM_INTERVAL
+        return ChronoUnit.HOURS.between(savedAt, LocalDateTime.now()) > MINIMUM_INTERVAL
     }
 
 }

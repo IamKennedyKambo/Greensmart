@@ -6,22 +6,30 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.layout_c_cart.view.*
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.db.entities.Product
+import org.triniti.greensmart.data.db.entities.Cart
+import org.triniti.greensmart.utilities.DataViewModel
 
-class CartItems(val product: Product, private val navController: NavController) : Item<ViewHolder>(){
+class CartItems(
+    private val cart: Cart,
+    private val navController: NavController,
+    private val viewModel: DataViewModel,
+    private val cartViewModel: CartViewModel
+) : Item<ViewHolder>() {
+
     override fun getLayout() = R.layout.layout_c_cart
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         val view = viewHolder.itemView
         Glide.with(view.context)
-            .load(product.image)
+            .load(cart.image)
             .into(view.ivProduct)
 
-        view.tvName.text = product.name
-        view.tvPrice.text = product.points.toString()
+        view.tvName.text = cart.name
+        view.tvPrice.text = cart.count.toString()
 
         view.butClaim.setOnClickListener {
-
+            viewModel.setCart(cart)
+            navController.navigate(R.id.destination_success)
         }
     }
 }

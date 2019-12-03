@@ -22,7 +22,7 @@ class ProductsItems(private val product: Product, private val navController: Nav
             .into(view.ivProduct)
 
         view.clProduct.setOnClickListener {
-            val action = ProductsDirections.actionDestinationSingleToDestinationPurchase(product)
+            val action = ProductsDirections.actionDestinationProductsToDestinationPurchase(product)
             navController.navigate(action)
         }
     }

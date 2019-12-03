@@ -23,6 +23,7 @@ import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.entities.Product
 import org.triniti.greensmart.utilities.Coroutines
 import org.triniti.greensmart.utilities.addMenu
+import org.triniti.greensmart.utilities.runLayoutAnimation
 
 
 class Products : Fragment(), KodeinAware {
@@ -51,7 +52,7 @@ class Products : Fragment(), KodeinAware {
         productsViewModel.id = args.shopId
 
         Coroutines.main {
-            productsViewModel.items.await().observe(this, Observer {
+            productsViewModel.items.await().observe(viewLifecycleOwner, Observer {
                 setUpRecyclerView(it.toSingleItems())
             })
         }
@@ -68,6 +69,7 @@ class Products : Fragment(), KodeinAware {
             adapter = groupAdapter
             layoutManager = LinearLayoutManager(context)
             addItemDecoration(decor)
+            runLayoutAnimation()
         }
     }
 

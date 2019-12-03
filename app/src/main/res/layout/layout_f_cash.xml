@@ -1,0 +1,79 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="product"
+            type="org.triniti.greensmart.data.db.entities.Product" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_cash"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/one"
+            android:textSize="100sp"
+            app:layout_constraintBottom_toTopOf="@id/sbPoints"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/times"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCount"
+            app:layout_constraintStart_toEndOf="@id/tvCount"
+            app:layout_constraintTop_toTopOf="@id/tvCount"
+            app:layout_constraintVertical_bias=".2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-12dp"
+            android:text="@{Integer.toString(product.price)}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCount"
+            app:layout_constraintStart_toEndOf="@id/tvTimes"
+            app:layout_constraintTop_toTopOf="@id/tvCount"
+            app:layout_constraintVertical_bias=".12" />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sbPoints"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="30"
+            android:padding="6dp"
+            app:layout_constraintBottom_toTopOf="@id/butPay" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/butPay"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/checkout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent=".6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+

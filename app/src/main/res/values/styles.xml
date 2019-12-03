@@ -10,6 +10,7 @@
 <!--        <product name="colorPrimaryDark">@color/colorPrimaryDark</product>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="md_corner_radius">8dp</item>
 <!--        <item name="android:navigationBarColor">#60000000</item>-->
     </style>
 

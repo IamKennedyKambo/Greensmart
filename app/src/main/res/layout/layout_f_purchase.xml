@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="16dp"
-        app:cardElevation="4dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintHeight_percent=".45"
         app:layout_constraintTop_toBottomOf="@id/tbPurchase">
@@ -37,7 +37,7 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         app:layout_constraintTop_toBottomOf="@id/cdImage"
-        app:cardElevation="4dp"
+        app:cardElevation="2dp"
         app:cardUseCompatPadding="true"
         app:contentPadding="6dp"
         android:id="@+id/cdDesc"
@@ -47,7 +47,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:text="Description"
+            android:text="@string/description"
             android:textSize="20sp"
             android:fontFamily="@font/montserrat"
             android:layout_height="wrap_content" />
@@ -64,135 +64,15 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:cardElevation="4dp"
+        app:cardElevation="2dp"
         android:id="@+id/cdCalc"
         app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cdDesc">
 
-        <ViewFlipper
-            android:id="@+id/vfPurchase"
-            android:inAnimation="@android:anim/slide_in_left"
-            android:outAnimation="@android:anim/slide_out_right"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vpPurchase"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tv1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="@string/your_points"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="6dp"
-                    android:layout_height="wrap_content" />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:id="@+id/tv2"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tv3"
-                    android:text="@string/unit_cost"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="6dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv1"
-                    android:layout_height="wrap_content" />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:id="@+id/tv4"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tv5"
-                    android:text="@string/billed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="6dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv3"
-                    android:layout_height="wrap_content" />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:id="@+id/tv6"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tv7"
-                    android:text="@string/balance"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="6dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv5"
-                    android:layout_height="wrap_content" />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:id="@+id/tv8"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tv9"
-                    android:text="@string/total"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginStart="6dp"
-                    app:layout_constraintTop_toBottomOf="@+id/tv7"
-                    android:layout_height="wrap_content" />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:id="@+id/tv10"-->
-<!--                    android:layout_height="wrap_content" />-->
-
-                <androidx.appcompat.widget.AppCompatSeekBar
-                    android:layout_width="match_parent"
-                    app:layout_constraintBottom_toTopOf="@id/butPay"
-                    android:layout_height="wrap_content" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:layout_width="0dp"
-                    android:text="@string/checkout"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintWidth_percent=".6"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:id="@+id/butPay"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_height="wrap_content" />
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="40dp"
-                    android:id="@+id/butNext"
-                    android:background="#c7c7c7"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_height="25dp" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="40dp"
-                    android:id="@+id/butPrev"
-                    android:background="#c7c7c7"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_height="25dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </ViewFlipper>
+            android:layout_height="match_parent" />
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

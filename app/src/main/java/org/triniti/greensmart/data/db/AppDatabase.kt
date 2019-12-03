@@ -5,14 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.triniti.greensmart.data.db.daos.BinsDao
+import org.triniti.greensmart.data.db.daos.CartDao
 import org.triniti.greensmart.data.db.daos.ShopDao
 import org.triniti.greensmart.data.db.daos.UserDao
 import org.triniti.greensmart.data.db.entities.Bin
+import org.triniti.greensmart.data.db.entities.Cart
 import org.triniti.greensmart.data.db.entities.Shop
 import org.triniti.greensmart.data.db.entities.User
 
 @Database(
-    entities = [User::class, Bin::class, Shop::class],
+    entities = [User::class, Bin::class, Shop::class, Cart::class],
     version = 2,
     exportSchema = false
 )
@@ -21,6 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getUserDao(): UserDao
     abstract fun getBinsDao(): BinsDao
     abstract fun getShopDao(): ShopDao
+    abstract fun getCartDao(): CartDao
 
     companion object {
 
@@ -39,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            "User_Database.db"
+            "App-Database.db"
         ).fallbackToDestructiveMigration()
             .build()
     }

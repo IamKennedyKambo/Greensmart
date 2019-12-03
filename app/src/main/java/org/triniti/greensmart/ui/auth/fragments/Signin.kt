@@ -1,5 +1,6 @@
 package org.triniti.greensmart.ui.auth.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.databinding.LayoutFLoginBinding
+import org.triniti.greensmart.ui.MainActivity
 import org.triniti.greensmart.ui.auth.AuthListener
 import org.triniti.greensmart.ui.auth.AuthViewModel
 import org.triniti.greensmart.ui.auth.AuthViewModelFactory
@@ -48,7 +50,7 @@ class Signin : Fragment(), AuthListener, KodeinAware {
         ivLogo.setImageResource(R.mipmap.ic_launcher)
 
         tvSignup.setOnClickListener {
-            findNavController().navigate(R.id.action_destination_login_to_destination_signup)
+            findNavController().navigate(R.id.destination_signup)
         }
     }
 
@@ -71,6 +73,10 @@ class Signin : Fragment(), AuthListener, KodeinAware {
     }
 
     private fun updateController() {
-        findNavController().navigate(R.id.action_destination_login_to_destination_home)
+        Intent(context, MainActivity::class.java).also {
+            startActivity(
+                it
+            )
+        }
     }
 }

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    
+
     <data>
+
         <variable
             name="viewModel"
             type="org.triniti.greensmart.ui.home.about.AboutViewModel" />
@@ -36,7 +37,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="6dp"
-                android:text="Profile"
+                android:text="@string/profile"
                 android:textSize="20sp"
                 android:fontFamily="@font/montserrat"
                 android:textStyle="bold"
@@ -101,5 +102,4 @@
             app:layout_constraintTop_toBottomOf="@id/clHeader"
             android:layout_height="0dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

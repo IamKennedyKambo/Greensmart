@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_login"
+    app:startDestination="@id/destination_signin">
+
+    <fragment
+        android:id="@+id/destination_signin"
+        android:name="org.triniti.greensmart.ui.auth.fragments.Signin"
+        android:label="Signin">
+        <action
+            android:id="@+id/action_signin_to_signup"
+            app:destination="@id/destination_signup" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_signup"
+        android:name="org.triniti.greensmart.ui.auth.fragments.Signup"
+        android:label="Signup">
+        <action
+            android:id="@+id/action_destination_signup_to_destination_signin"
+            app:destination="@id/destination_signin" />
+    </fragment>
+</navigation>

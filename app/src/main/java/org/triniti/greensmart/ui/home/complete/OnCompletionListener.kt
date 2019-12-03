@@ -1,4 +1,4 @@
-package org.triniti.greensmart.ui.home.bins
+package org.triniti.greensmart.ui.home.complete
 
 import org.triniti.greensmart.data.db.entities.User
 

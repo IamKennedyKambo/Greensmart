@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity
 data class Bin(
     @PrimaryKey(autoGenerate = false)
-    val id: Int,
-    val latitude: Double,
-    val longitude: Double,
-    val fill_level: Int
+    var id: Int,
+    var latitude: Double,
+    var longitude: Double,
+    var fill_level: Int
 )

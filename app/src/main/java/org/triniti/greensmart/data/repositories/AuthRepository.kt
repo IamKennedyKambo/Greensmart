@@ -10,7 +10,9 @@ class AuthRepository(private val api: GreenApi, private val db: AppDatabase) : S
 
     suspend fun userLogin(email: String, password: String): AuthResponse {
         val user = User(email = email, password = password)
-        return apiRequest { api.userLogin(user) }
+        return apiRequest {
+            api.userLogin(user)
+        }
     }
 
     suspend fun userSignUp(name: String, email: String, password: String): AuthResponse {
@@ -28,7 +30,10 @@ class AuthRepository(private val api: GreenApi, private val db: AppDatabase) : S
         }
     }
 
-    suspend fun saveUser(user: User) = db.getUserDao().upsert(user)
+    suspend fun saveUser(user: User) {
+        db.getUserDao().upsert(user)
+    }
+
 
     fun getUser() = db.getUserDao().getUser()
 }

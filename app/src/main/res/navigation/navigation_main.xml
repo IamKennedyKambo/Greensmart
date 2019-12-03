@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_main.xml"
+    app:startDestination="@id/destination_bins">
+
+    <fragment
+        android:id="@+id/destination_bins"
+        android:name="org.triniti.greensmart.ui.home.bins.Bins"
+        android:label="Bins" />
+    <fragment
+        android:id="@+id/destination_about"
+        android:name="org.triniti.greensmart.ui.home.about.About"
+        android:label="About" />
+    <fragment
+        android:id="@+id/destination_mall"
+        android:name="org.triniti.greensmart.ui.home.shop.mall.Mall"
+        android:label="Mall">
+        <action
+            android:id="@+id/action_destination_mall_to_destination_products"
+            app:destination="@id/destination_products" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_map"
+        android:name="org.triniti.greensmart.ui.home.shop.purchase.fragments.success.Locate"
+        android:label="Map" />
+    <fragment
+        android:id="@+id/destination_loyalty"
+        android:name="org.triniti.greensmart.ui.home.stats.Loyalty"
+        android:label="Loyalty" />
+    <fragment
+        android:id="@+id/destination_products"
+        android:name="org.triniti.greensmart.ui.home.shop.single.Products"
+        android:label="Products">
+        <action
+            android:id="@+id/action_destination_products_to_destination_purchase"
+            app:destination="@id/destination_purchase" />
+        <argument
+            android:name="shopName"
+            app:argType="string" />
+        <argument
+            android:name="shopId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_purchase"
+        android:name="org.triniti.greensmart.ui.home.shop.purchase.fragments.Purchase"
+        android:label="Purchase">
+        <argument
+            android:name="product"
+            app:argType="org.triniti.greensmart.data.db.entities.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_success"
+        android:name="org.triniti.greensmart.ui.home.shop.purchase.fragments.success.Success"
+        android:label="Success">
+        <action
+            android:id="@+id/action_destination_success_to_destination_cart"
+            app:destination="@id/destination_cart" />
+        <argument
+            android:name="product"
+            app:argType="org.triniti.greensmart.data.db.entities.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_cart"
+        android:name="org.triniti.greensmart.ui.home.cart.Cart"
+        android:label="Cart">
+        <action
+            android:id="@+id/action_destination_cart_to_destination_success"
+            app:destination="@id/destination_success" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_cash"
+        android:name="org.triniti.greensmart.ui.home.shop.purchase.fragments.payment.Cash"
+        android:label="Cash">
+        <action
+            android:id="@+id/action_destination_cash_to_destination_success"
+            app:destination="@id/destination_success" />
+    </fragment>
+    <fragment
+        android:id="@+id/destination_points"
+        android:name="org.triniti.greensmart.ui.home.shop.purchase.fragments.payment.Points"
+        android:label="Points">
+        <action
+            android:id="@+id/action_destination_points_to_destination_success"
+            app:destination="@id/destination_success" />
+    </fragment>
+</navigation>

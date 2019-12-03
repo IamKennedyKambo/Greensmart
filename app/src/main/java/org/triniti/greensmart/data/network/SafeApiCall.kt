@@ -19,9 +19,7 @@ abstract class SafeApiCall {
                     message.append(JSONObject(it).getString("message"))
                 } catch (e: JSONException) {
                 }
-                message.append("\n")
             }
-            message.append("Error code ${response.code()}")
 
             throw ApiExceptions(message.toString())
         }

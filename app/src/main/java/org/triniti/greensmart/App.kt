@@ -13,33 +13,35 @@ import org.triniti.greensmart.data.db.AppDatabase
 import org.triniti.greensmart.data.network.GreenApi
 import org.triniti.greensmart.data.network.NetworkConnectionInterceptor
 import org.triniti.greensmart.data.preferences.PreferenceProvider
-import org.triniti.greensmart.data.repositories.AuthRepository
-import org.triniti.greensmart.data.repositories.BinsRepository
-import org.triniti.greensmart.data.repositories.ProductsRepository
-import org.triniti.greensmart.data.repositories.MallRepository
+import org.triniti.greensmart.data.repositories.*
 import org.triniti.greensmart.ui.auth.AuthViewModelFactory
 import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
 import org.triniti.greensmart.ui.home.bins.BinsViewModelFactory
+import org.triniti.greensmart.ui.home.cart.CartViewModelFactory
 import org.triniti.greensmart.ui.home.shop.mall.MallViewModelFactory
 import org.triniti.greensmart.ui.home.shop.single.ProductsViewModelFactory
+import org.triniti.greensmart.utilities.DataViewModel
 
-class MyApplication : Application(), KodeinAware {
+class App : Application(), KodeinAware {
 
     override val kodein = Kodein.lazy {
-        import(androidXModule(this@MyApplication))
+        import(androidXModule(this@App))
 
         bind() from singleton { NetworkConnectionInterceptor(instance()) }
         bind() from singleton { GreenApi(instance()) }
+        bind() from singleton { DataViewModel() }
         bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { ProductsRepository(instance()) }
+        bind() from singleton { CartRepository(instance()) }
         bind() from singleton { AuthRepository(instance(), instance()) }
         bind() from singleton { BinsRepository(instance(), instance(), instance()) }
         bind() from singleton { MallRepository(instance(), instance(), instance()) }
-        bind() from provider { AuthViewModelFactory(instance()) }
+        bind() from provider { AuthViewModelFactory(instance(), instance()) }
         bind() from provider { AboutViewModelFactory(instance()) }
         bind() from provider { BinsViewModelFactory(instance()) }
         bind() from provider { MallViewModelFactory(instance()) }
+        bind() from provider { CartViewModelFactory(instance()) }
         bind() from provider { ProductsViewModelFactory(instance()) }
     }
 

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.xwray.groupie.GroupAdapter
@@ -16,8 +15,9 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.pojos.Setting
+import org.triniti.greensmart.data.db.entities.Setting
 import org.triniti.greensmart.databinding.LayoutFAboutBinding
+import org.triniti.greensmart.utilities.getViewModel
 
 class About : Fragment(), KodeinAware {
 
@@ -35,8 +35,7 @@ class About : Fragment(), KodeinAware {
 
         val binding: LayoutFAboutBinding =
             DataBindingUtil.inflate(inflater, R.layout.layout_f_about, container, false)
-        aboutViewModel = ViewModelProviders.of(this, factory).get(AboutViewModel::class.java)
-        aboutViewModel.context = context
+        aboutViewModel = activity?.getViewModel(factory)!!
         binding.viewModel = aboutViewModel
         binding.lifecycleOwner = this
         return binding.root
@@ -49,6 +48,24 @@ class About : Fragment(), KodeinAware {
             findNavController().navigateUp()
         }
 
+        setUpRecyclerView()
+    }
+
+    private fun setUpRecyclerView() {
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            addAll(
+                getSettings()
+            )
+        }
+
+        rvSetting.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = groupAdapter
+        }
+    }
+
+    private fun getSettings(): List<AboutItem> {
         settings.add(
             AboutItem(
                 Setting(
@@ -91,25 +108,6 @@ class About : Fragment(), KodeinAware {
             )
         )
 
-        settings.add(
-            AboutItem(
-                Setting(
-                    "Join collectors",
-                    context!!.getDrawable(R.drawable.vector_signup)!!
-                )
-            )
-        )
-
-        val groupAdapter = GroupAdapter<ViewHolder>().apply {
-            addAll(
-                settings
-            )
-        }
-
-        rvSetting.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = groupAdapter
-        }
+        return settings
     }
 }

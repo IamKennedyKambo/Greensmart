@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 @Entity
 data class Shop(
     @PrimaryKey(autoGenerate = false)
-    val id: String,//Shop name
-    val name: String,//Shop logo
-    val logo: String,//Shop id
-    val latitude: Double,//Shop location
-    val longitude: Double//Shop catalog
+    var id: String,//Shop name
+    var name: String,//Shop logo
+    var logo: String,//Shop id
+    var latitude: Double,//Shop location
+    var longitude: Double//Shop catalog
 )

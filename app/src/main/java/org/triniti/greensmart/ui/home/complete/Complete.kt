@@ -1,11 +1,11 @@
-package org.triniti.greensmart.ui.home.bins
+package org.triniti.greensmart.ui.home.complete
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_d_complete.*
 import org.kodein.di.KodeinAware
@@ -17,9 +17,11 @@ import org.triniti.greensmart.ui.auth.AuthViewModel
 import org.triniti.greensmart.ui.auth.AuthViewModelFactory
 import org.triniti.greensmart.ui.home.about.AboutViewModel
 import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
+import org.triniti.greensmart.utilities.getViewModel
 import org.triniti.greensmart.utilities.showToast
 
-class Complete : BottomSheetDialogFragment(), KodeinAware, OnCompletionListener {
+class Complete : BottomSheetDialogFragment(), KodeinAware,
+    OnCompletionListener {
 
     override fun onCompletion(user: User) {
         authViewModel.saveUser(user)
@@ -32,7 +34,7 @@ class Complete : BottomSheetDialogFragment(), KodeinAware, OnCompletionListener 
     private lateinit var aboutViewModel: AboutViewModel
     private lateinit var authViewModel: AuthViewModel
     private val userFactory: AuthViewModelFactory by instance()
-    private val factory: AboutViewModelFactory by instance()
+    private val aboutfactory: AboutViewModelFactory by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,8 +47,8 @@ class Complete : BottomSheetDialogFragment(), KodeinAware, OnCompletionListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        authViewModel = ViewModelProviders.of(this, userFactory).get(AuthViewModel::class.java)
-        aboutViewModel = ViewModelProviders.of(this, factory).get(AboutViewModel::class.java)
+        authViewModel = activity?.getViewModel(userFactory)!!
+        aboutViewModel = activity?.getViewModel(aboutfactory)!!
         aboutViewModel.listener = this
 
         butDone.setOnClickListener {
@@ -57,12 +59,10 @@ class Complete : BottomSheetDialogFragment(), KodeinAware, OnCompletionListener 
             } else if (cardId.length != 6) {
                 context?.showToast("Please fill in the correct ID")
             } else {
-                aboutViewModel.user.observe(this, Observer {
-                    it.apply {
-                        val user = this
-                        user.cardId = etCard.text.toString()
-                        aboutViewModel.updateUser(user)
-                    }
+                authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer {
+                    val newUser = it.copy(cardId = cardId)
+                    aboutViewModel.updateUser(newUser)
+                    Log.i("User", newUser.toString())
                 })
             }
         }

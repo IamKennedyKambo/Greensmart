@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -28,10 +27,8 @@ import org.triniti.greensmart.ui.auth.AuthViewModel
 import org.triniti.greensmart.ui.auth.AuthViewModelFactory
 import org.triniti.greensmart.ui.home.about.AboutViewModel
 import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
-import org.triniti.greensmart.utilities.Coroutines
-import org.triniti.greensmart.utilities.convertBinToLatLng
-import org.triniti.greensmart.utilities.getLocation
-import org.triniti.greensmart.utilities.setUpFragmentMap
+import org.triniti.greensmart.ui.home.complete.Complete
+import org.triniti.greensmart.utilities.*
 
 
 class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.ConnectionCallbacks,
@@ -50,12 +47,16 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         googleMap.setOnCameraMoveStartedListener { reasonCode ->
-//            if (reasonCode == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
+            //            if (reasonCode == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
 //
 //            }
         }
 
-        val listener = object : GetLatLng {
+        val listener = object : OnLatLangListener {
+            override fun onFailure(message: String?) {
+
+            }
+
             override fun onSuccess(latLng: LatLng) {
                 val camPos = CameraPosition.Builder()
                     .target(latLng)
@@ -67,17 +68,24 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
                 googleMap.animateCamera(camUpd3)
             }
 
-            override fun onFailure(message: String?) {
-            }
         }
 
         requireActivity().getLocation(listener)
 
         Coroutines.main {
             binsViewModel.bins.await().observe(this, Observer {
-                it.convertBinToLatLng(googleMap, context!!)
+                if (it != null) {
+                    convertBinToLatLng(it, googleMap, context!!)
+                }
             })
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binsViewModel = activity?.getViewModel(binsFactory)!!
+        authViewModel = activity?.getViewModel(userFactory)!!
+        aboutViewModel = activity?.getViewModel(aboutFactory)!!
     }
 
     override fun onCreateView(
@@ -85,12 +93,10 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binsViewModel = ViewModelProviders.of(this, binsFactory).get(BinsViewModel::class.java)
-        authViewModel = ViewModelProviders.of(this, userFactory).get(AuthViewModel::class.java)
-        aboutViewModel = ViewModelProviders.of(this, aboutFactory).get(AboutViewModel::class.java)
 
         val binding: LayoutFHomeBinding =
             DataBindingUtil.inflate(inflater, R.layout.layout_f_home, container, false)
+
         binding.viewModel = binsViewModel
         binding.lifecycleOwner = this
         return binding.root
@@ -108,23 +114,30 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
 
         setListeners()
 
-        authViewModel.getLoggedInUser().observe(this, Observer {
-            if (it != null) {
-                val cardId = it.cardId
-
-                if (cardId != null) {
-                    if (cardId.isEmpty() || cardId.isBlank())
-                        Complete().show(childFragmentManager, "Completion")
-
-                }
-            }
+        aboutViewModel.user.observe(viewLifecycleOwner, Observer {
+            tvUsable.text = it.usable_points.toString()
+            tvAvailable.text = it.available_points.toString()
         })
 
         setUpFragmentMap(R.id.fragMaps)
     }
 
+    override fun onResume() {
+        super.onResume()
+        authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                val cardId = it.cardId
+
+                if (cardId!!.isEmpty() || cardId.isBlank()) {
+                    Complete().show(childFragmentManager, "Completion")
+                }
+            }
+        })
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         googleApiClient = GoogleApiClient.Builder(context!!)
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
@@ -145,17 +158,17 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
 
     private fun setListeners() {
         flStats.setOnClickListener {
-            findNavController().navigate(R.id.destination_points)
+            findNavController().navigate(R.id.destination_loyalty)
         }
 
         imMore.setOnClickListener {
-            findNavController().navigate(R.id.destination_settings)
+            findNavController().navigate(R.id.destination_about)
         }
         imShop.setOnClickListener {
             findNavController().navigate(R.id.destination_mall)
         }
         imStats.setOnClickListener {
-            findNavController().navigate(R.id.destination_points)
+            findNavController().navigate(R.id.destination_loyalty)
         }
     }
 }

@@ -28,7 +28,6 @@
                 android:id="@+id/tbCart"
                 android:layout_width="match_parent"
                 android:layout_height="?android:actionBarSize" />
-
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

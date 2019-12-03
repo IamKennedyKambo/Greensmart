@@ -30,7 +30,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="50dp"
-                android:text="250"
+                android:id="@+id/tvUsable"
                 android:textStyle="bold"
                 android:textColor="@android:color/holo_green_dark"
                 android:gravity="center"
@@ -45,8 +45,8 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="50dp"
-                android:text="300"
                 android:textStyle="bold"
+                android:id="@+id/tvAvailable"
                 android:textColor="@android:color/holo_red_light"
                 android:gravity="center"
                 android:layout_gravity="center_vertical|end"

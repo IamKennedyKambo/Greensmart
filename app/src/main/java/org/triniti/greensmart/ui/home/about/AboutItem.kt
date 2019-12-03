@@ -6,7 +6,7 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.layout_c_settings.view.*
 import org.triniti.greensmart.R
-import org.triniti.greensmart.data.pojos.Setting
+import org.triniti.greensmart.data.db.entities.Setting
 
 class AboutItem(private val setting: Setting) : Item<ViewHolder>() {
     override fun getLayout() = R.layout.layout_c_settings

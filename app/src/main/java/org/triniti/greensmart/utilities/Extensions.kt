@@ -5,14 +5,21 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,10 +31,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import net.glxn.qrgen.android.QRCode
 import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.entities.Bin
-import org.triniti.greensmart.ui.home.bins.GetLatLng
+import org.triniti.greensmart.data.db.entities.Cart
+import org.triniti.greensmart.data.db.entities.Product
+import org.triniti.greensmart.ui.home.bins.OnLatLangListener
+import java.util.*
 import kotlin.math.ln
+
+private const val ALLOWED_CHARACTERS = "0123456789qwertyuiopasdfghjklzxcvbnm"
 
 fun NavController.navigateUpOrFinish(activity: AppCompatActivity): Boolean {
     return if (navigateUp()) {
@@ -63,14 +76,6 @@ fun Context.showToast(text: CharSequence, length: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, text, length).show()
 }
 
-fun View.toggleVisibility() {
-    if (this.isVisible) {
-        this.visibility == View.GONE
-    } else {
-        this.visibility == View.VISIBLE
-    }
-}
-
 fun Fragment.setUpFragmentMap(resId: Int) {
     if (this is OnMapReadyCallback) {
         val fm = childFragmentManager
@@ -83,17 +88,19 @@ fun Fragment.setUpFragmentMap(resId: Int) {
     }
 }
 
-fun Activity.getLocation(getLatLng: GetLatLng) {
+fun Activity.getLocation(onLatLangListener: OnLatLangListener) {
     val mFusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(this)
 
     mFusedLocationClient.lastLocation
         .addOnSuccessListener {
-            getLatLng.onSuccess(LatLng(it.latitude, it.longitude))
+            it?.let {
+                onLatLangListener.onSuccess(LatLng(it.latitude, it.longitude))
+            }
         }
         .addOnFailureListener { e ->
             e.printStackTrace()
-            getLatLng.onFailure(e.message)
+            onLatLangListener.onFailure(e.message)
         }
 }
 
@@ -120,10 +127,10 @@ fun Context.getZoomLevel(radius: Double): Float {
     } else 16f
 }
 
-fun List<Bin>.convertBinToLatLng(map: GoogleMap, context: Context) {
+fun convertBinToLatLng(list: List<Bin>, map: GoogleMap, context: Context) {
     var latLng: LatLng
     val listLats: MutableList<LatLng> = mutableListOf()
-    forEach { bin ->
+    list.forEach { bin ->
         latLng = LatLng(bin.latitude, bin.longitude)
         listLats.add(latLng)
     }
@@ -160,4 +167,45 @@ fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescri
     val canvas = Canvas(bitmap)
     vectorDrawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bitmap)
+}
+
+fun RecyclerView.runLayoutAnimation() {
+    val controller =
+        AnimationUtils.loadLayoutAnimation(context, R.anim.linear_animation)
+
+    layoutAnimation = controller
+    adapter?.notifyDataSetChanged()
+    scheduleLayoutAnimation()
+}
+
+fun randomString(): String {
+    val randSize = 12
+    val random = Random()
+    val sb = StringBuilder(randSize)
+    for (i in 0 until randSize)
+        sb.append(ALLOWED_CHARACTERS[random.nextInt(ALLOWED_CHARACTERS.length)])
+    return sb.toString()
+}
+
+fun generateQrCode(productCode: String, imageView: ImageView) {
+    val myBitmap = QRCode.from(productCode).bitmap()
+    imageView.setImageBitmap(myBitmap)
+}
+
+fun Product.toCart(userId: Int, points: Int, code: String, count: Int): Cart {
+    return Cart(
+        shopId = this.shopId,
+        userId = userId,
+        name = this.name,
+        price = this.price.times(count),
+        image = this.image,
+        points = points,
+        count = count,
+        code = code,
+        description = this.description
+    )
+}
+
+inline fun <reified T : ViewModel> FragmentActivity.getViewModel(factory: ViewModelProvider.NewInstanceFactory): T {
+    return ViewModelProviders.of(this, factory)[T::class.java]
 }

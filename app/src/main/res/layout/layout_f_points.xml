@@ -1,66 +1,71 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="product"
+            type="org.triniti.greensmart.data.db.entities.Product" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clPoints"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintHeight_percent=".7"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/ivMarket"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_colorFilter="@android:color/white"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/basket" />
-
-        <com.github.abdularis.civ.CircleImageView
-            android:layout_width="90dp"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:strokeWidth="2dp"
-            app:strokeColor="@android:color/white"
-            android:src="@mipmap/ic_launcher"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias=".13"
+            android:layout_height="wrap_content"
+            android:text="@string/one_placeholder"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias=".07"
-            android:padding="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="90dp" />
+            android:textSize="100sp"
+            app:layout_constraintBottom_toTopOf="@id/sbPoints"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHeight_percent=".5"
-            android:id="@+id/pieChart"
-            app:layout_constraintVertical_bias=".8"
-            app:layout_constraintWidth_percent=".8"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="0dp" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTimes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/times"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCount"
+            app:layout_constraintStart_toEndOf="@id/tvCount"
+            app:layout_constraintTop_toTopOf="@id/tvCount"
+            app:layout_constraintVertical_bias=".2" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="-12dp"
+            android:text="@{Integer.toString(product.points)}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/tvCount"
+            app:layout_constraintStart_toEndOf="@id/tvTimes"
+            app:layout_constraintTop_toTopOf="@id/tvCount"
+            app:layout_constraintVertical_bias=".12" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/clPoints"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:cardElevation="4dp"
-        app:cardUseCompatPadding="true"
-        android:layout_height="0dp">
-
-        <androidx.viewpager.widget.ViewPager
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sbPoints"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </com.google.android.material.card.MaterialCardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:max="30"
+            android:padding="6dp"
+            app:layout_constraintBottom_toTopOf="@id/butPay" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:id="@+id/butPay"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_height="wrap_content"
+            android:text="@string/checkout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent=".6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
