@@ -41,13 +41,18 @@ interface GreenApi {
     @GET("catalog/{shopId}")
     suspend fun fetchItems(@Path("shopId") shopId: Int): Response<ProductsResponse>
 
-    @Headers("Cache-control: no-cache")
-    @GET("cart/{userId}")
+    @POST("carts/{userId}")
     suspend fun getCart(@Path("userId") userId: Int): Response<CartResponse>
 
     @Headers("Content-Type:application/json")
     @POST("cart")
     suspend fun createEntry(@Body cart: Cart): Response<CartResponse>
+
+    @POST("cart/{cartId}")
+    suspend fun deleteEntry(@Path("cartId") id: Int)
+
+    @GET("news")
+    suspend fun getNews(): Response<NewsResponse>
 
     companion object {
         operator fun invoke(interceptor: NetworkConnectionInterceptor): GreenApi {

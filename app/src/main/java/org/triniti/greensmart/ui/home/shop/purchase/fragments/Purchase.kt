@@ -17,21 +17,26 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
+import org.triniti.greensmart.ui.home.cart.CartViewModel
+import org.triniti.greensmart.ui.home.cart.CartViewModelFactory
 import org.triniti.greensmart.ui.home.shop.purchase.FragmentAdapter
 import org.triniti.greensmart.ui.home.shop.purchase.fragments.payment.Points
-import org.triniti.greensmart.utilities.DataViewModel
-import org.triniti.greensmart.utilities.addMenu
+import org.triniti.greensmart.utilities.*
 
 class Purchase : Fragment(), KodeinAware {
     override val kodein by kodein()
     private val args: PurchaseArgs by navArgs()
     private val dataViewModel: DataViewModel by instance()
+    private lateinit var cartViewModel: CartViewModel
+    private val cartFactory: CartViewModelFactory by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        cartViewModel = activity?.getViewModel(cartFactory)!!
         return inflater.inflate(R.layout.layout_f_purchase, container, false)
     }
 

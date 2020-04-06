@@ -1,7 +1,6 @@
 package org.triniti.greensmart.ui.home.complete
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,9 @@ import org.triniti.greensmart.ui.auth.AuthViewModel
 import org.triniti.greensmart.ui.auth.AuthViewModelFactory
 import org.triniti.greensmart.ui.home.about.AboutViewModel
 import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
+import org.triniti.greensmart.utilities.DataViewModel
 import org.triniti.greensmart.utilities.getViewModel
+import org.triniti.greensmart.utilities.showSnackBar
 import org.triniti.greensmart.utilities.showToast
 
 class Complete : BottomSheetDialogFragment(), KodeinAware,
@@ -25,8 +26,13 @@ class Complete : BottomSheetDialogFragment(), KodeinAware,
 
     override fun onCompletion(user: User) {
         authViewModel.saveUser(user)
-        context?.showToast("updated successfully")
-        dismiss()
+        if (isAdded && isVisible) {
+            dismiss()
+        }
+    }
+
+    override fun onFailure(message: String) {
+        view?.showSnackBar(message)
     }
 
     override val kodein by kodein()
@@ -34,7 +40,8 @@ class Complete : BottomSheetDialogFragment(), KodeinAware,
     private lateinit var aboutViewModel: AboutViewModel
     private lateinit var authViewModel: AuthViewModel
     private val userFactory: AuthViewModelFactory by instance()
-    private val aboutfactory: AboutViewModelFactory by instance()
+    private val aboutFactory: AboutViewModelFactory by instance()
+    private val dataViewModel: DataViewModel by instance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,8 +55,8 @@ class Complete : BottomSheetDialogFragment(), KodeinAware,
         super.onViewCreated(view, savedInstanceState)
 
         authViewModel = activity?.getViewModel(userFactory)!!
-        aboutViewModel = activity?.getViewModel(aboutfactory)!!
-        aboutViewModel.listener = this
+        aboutViewModel = activity?.getViewModel(aboutFactory)!!
+        aboutViewModel.completionListener = this
 
         butDone.setOnClickListener {
             val cardId = etCard.text.toString()
@@ -62,7 +69,7 @@ class Complete : BottomSheetDialogFragment(), KodeinAware,
                 authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer {
                     val newUser = it.copy(cardId = cardId)
                     aboutViewModel.updateUser(newUser)
-                    Log.i("User", newUser.toString())
+                    dataViewModel.updateComplete(yes = true)
                 })
             }
         }

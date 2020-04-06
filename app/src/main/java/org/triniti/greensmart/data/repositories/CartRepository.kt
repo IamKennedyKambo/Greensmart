@@ -1,25 +1,25 @@
 package org.triniti.greensmart.data.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.triniti.greensmart.data.db.entities.Cart
 import org.triniti.greensmart.data.network.GreenApi
 import org.triniti.greensmart.data.network.SafeApiCall
+import org.triniti.greensmart.data.preferences.PreferenceProvider
 
 class CartRepository(
-    private val api: GreenApi
+    private val api: GreenApi,
+    private val prefs: PreferenceProvider
 ) : SafeApiCall() {
 
-    private val cart = MutableLiveData<List<Cart>>()
+    val cart = MutableLiveData<List<Cart>>()
 
-    suspend fun fetchCart(userId: Int): LiveData<List<Cart>> {
+    suspend fun fetchCart(): LiveData<List<Cart>> {
         try {
             val response = apiRequest {
-                api.getCart(userId)
+                api.getCart(prefs.getUserId()!!)
             }
             cart.postValue(response.cart)
-            Log.i("From network", cart.value?.size.toString())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -32,5 +32,9 @@ class CartRepository(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    suspend fun deleteEntry(id: Int) {
+        api.deleteEntry(id)
     }
 }

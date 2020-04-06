@@ -1,5 +1,7 @@
 package org.triniti.greensmart.ui.home.bins
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.elconfidencial.bubbleshowcase.BubbleShowCase
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseBuilder
+import com.elconfidencial.bubbleshowcase.BubbleShowCaseListener
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationServices
@@ -29,7 +34,8 @@ import org.triniti.greensmart.ui.home.about.AboutViewModel
 import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
 import org.triniti.greensmart.ui.home.complete.Complete
 import org.triniti.greensmart.utilities.*
-
+import org.triniti.greensmart.utilities.Constants.LOCATION_REQUEST_CODE
+import org.triniti.greensmart.utilities.Constants.STATISTICS_SHOWN
 
 class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener {
@@ -43,14 +49,10 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
     private lateinit var authViewModel: AuthViewModel
     private lateinit var aboutViewModel: AboutViewModel
     private var googleApiClient: GoogleApiClient? = null
+    private val dataViewModel: DataViewModel by instance()
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        googleMap.setOnCameraMoveStartedListener { reasonCode ->
-            //            if (reasonCode == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) {
-//
-//            }
-        }
 
         val listener = object : OnLatLangListener {
             override fun onFailure(message: String?) {
@@ -107,32 +109,26 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
 
         requestPermissions(
             arrayOf(
-                android.Manifest.permission.ACCESS_FINE_LOCATION,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ), 231
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ), LOCATION_REQUEST_CODE
         )
 
         setListeners()
 
+        dataViewModel.complete.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                showTutorial()
+                dataViewModel.updateComplete(false)
+            }
+        })
+
         aboutViewModel.user.observe(viewLifecycleOwner, Observer {
-            tvUsable.text = it.usable_points.toString()
-            tvAvailable.text = it.available_points.toString()
+            tvUsable.text = "${it.usable_points} Points"
+//            tvAvailable.text = it.available_points.toString()
         })
 
         setUpFragmentMap(R.id.fragMaps)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                val cardId = it.cardId
-
-                if (cardId!!.isEmpty() || cardId.isBlank()) {
-                    Complete().show(childFragmentManager, "Completion")
-                }
-            }
-        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -143,6 +139,35 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
             .addOnConnectionFailedListener(this)
             .addApi(LocationServices.API)
             .build()
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (permissions.contentEquals(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
+                )
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED
+            ) {
+                authViewModel.getLoggedInUser().observe(viewLifecycleOwner, Observer {
+                    if (it != null) {
+                        val cardId = it.cardId
+
+                        if (cardId!!.isEmpty() || cardId.isBlank()) {
+                            Complete().show(childFragmentManager, "Completion")
+                        } else {
+                            showTutorial()
+                        }
+                    }
+                })
+            }
+        }
     }
 
     override fun onConnectionFailed(p0: ConnectionResult) {
@@ -164,11 +189,37 @@ class Bins : Fragment(), OnMapReadyCallback, KodeinAware, GoogleApiClient.Connec
         imMore.setOnClickListener {
             findNavController().navigate(R.id.destination_about)
         }
+
         imShop.setOnClickListener {
             findNavController().navigate(R.id.destination_mall)
         }
-        imStats.setOnClickListener {
-            findNavController().navigate(R.id.destination_loyalty)
+    }
+
+    private fun showTutorial() {
+        activity?.run {
+            BubbleShowCaseBuilder(this) //Activity instance
+                .title("Care for a tutorial?") //Any title for the bubble view
+                .description("Click here to view your account's statistics and news from Greensmart.")
+                .showOnce(STATISTICS_SHOWN)
+                .targetView(flStats) //View to point out
+                .listener(object : BubbleShowCaseListener{
+                    override fun onBackgroundDimClick(bubbleShowCase: BubbleShowCase) {
+
+                    }
+
+                    override fun onBubbleClick(bubbleShowCase: BubbleShowCase) {
+
+                    }
+
+                    override fun onCloseActionImageClick(bubbleShowCase: BubbleShowCase) {
+                    }
+
+                    override fun onTargetClick(bubbleShowCase: BubbleShowCase) {
+                        findNavController().navigate(R.id.destination_loyalty)
+                    }
+
+                })
+                .show()
         }
     }
 }

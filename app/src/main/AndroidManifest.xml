@@ -42,7 +42,9 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity android:name=".ui.MainActivity" />
-        <activity android:name=".ui.auth.Login">
+        <activity android:name=".ui.auth.Login"
+            android:theme="@style/LoginTheme"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,7 +4,6 @@
     android:id="@+id/bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff678"
     android:orientation="vertical"
     app:cardElevation="12dp"
     app:cardCornerRadius="0dp"
@@ -13,6 +12,11 @@
     android:animateLayoutChanges="true"
     app:behavior_peekHeight="56dp"
     app:layout_behavior="org.triniti.greensmart.ui.widgets.LockableBottomSheetBehavior">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:id="@+id/ivMap"
+        android:layout_height="56dp"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
@@ -24,7 +28,6 @@
         android:textStyle="bold"
         android:fontFamily="@font/montserrat"
         android:layout_height="56dp" />
-
 
     <FrameLayout
         android:orientation="vertical"

@@ -13,10 +13,8 @@ data class User(
     var password: String? = null,
     var about: String? = "",
     var date_joined: String? = null,
-    var latitude: Double? = 0.0,
-    var longitude: Double? = 0.0,
     var usable_points: Int? = 10,
-    var available_points: Int? = 10,
+    var used_points: Int? = 0,
     var level: Int? = 1,
     var cardId: String? = ""
 ) {

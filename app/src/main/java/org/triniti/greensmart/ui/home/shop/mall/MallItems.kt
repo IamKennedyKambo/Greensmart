@@ -9,7 +9,7 @@ import org.triniti.greensmart.R
 import org.triniti.greensmart.data.db.entities.Shop
 
 class MallItems(
-    val shop: Shop,
+    private val shop: Shop,
     private val navController: NavController
 ) : Item<ViewHolder>() {
 

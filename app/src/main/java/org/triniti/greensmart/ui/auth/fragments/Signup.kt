@@ -1,6 +1,7 @@
 package org.triniti.greensmart.ui.auth.fragments
 
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,14 +26,14 @@ import org.triniti.greensmart.utilities.showSnackBar
 class Signup : Fragment(), AuthListener, KodeinAware {
 
     override val kodein by kodein()
-
     private val factory: AuthViewModelFactory by instance()
+    private lateinit var binding: LayoutFSignupBinding
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: LayoutFSignupBinding =
+        binding =
             DataBindingUtil.inflate(inflater, R.layout.layout_f_signup, container, false)
 
         val authViewModel = ViewModelProviders.of(this, factory)
@@ -52,6 +53,14 @@ class Signup : Fragment(), AuthListener, KodeinAware {
         tvLogin.setOnClickListener {
             findNavController().navigate(R.id.destination_signin)
         }
+
+        val linearLayout = binding.flGradient
+        val anim = linearLayout.background as AnimationDrawable
+
+        anim.setEnterFadeDuration(2500)
+        anim.setExitFadeDuration(5000)
+
+        anim.start()
     }
 
     override fun onStarted() {

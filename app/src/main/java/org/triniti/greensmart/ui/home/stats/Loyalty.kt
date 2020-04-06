@@ -1,32 +1,54 @@
 package org.triniti.greensmart.ui.home.stats
 
-import android.graphics.Color
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.layout_f_loyalty.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
+import org.triniti.greensmart.data.db.entities.News
+import org.triniti.greensmart.ui.home.about.AboutViewModel
+import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
+import org.triniti.greensmart.ui.home.cart.CartViewModel
+import org.triniti.greensmart.ui.home.cart.CartViewModelFactory
+import org.triniti.greensmart.utilities.Coroutines
+import org.triniti.greensmart.utilities.getViewModel
 
-class Loyalty : Fragment() {
-    private val yData = floatArrayOf(25.3f, 74.7f)
-    private val xData = arrayOf("Mitch", "Jessica")
+
+class Loyalty : Fragment(), KodeinAware {
+
+    override val kodein by kodein()
+    private lateinit var aboutViewModel: AboutViewModel
+    private val aboutFactory: AboutViewModelFactory by instance()
+    private lateinit var newsViewModel: NewsViewModel
+    private val newsFactory: NewsViewModelFactory by instance()
+    private var usedPoints: Int = 0
+    private var unusedPoints: Int = 0
+    private val snapper: LinearSnapHelper by lazy {
+        LinearSnapHelper()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        aboutViewModel = activity?.getViewModel(aboutFactory)!!
+        newsViewModel = activity?.getViewModel(newsFactory)!!
+
         return inflater.inflate(
             R.layout.layout_f_loyalty,
             container,
@@ -41,81 +63,64 @@ class Loyalty : Fragment() {
             findNavController().navigate(R.id.destination_mall)
         }
 
-        val desc = Description()
-        desc.text = ""
-        pieChart.setDrawEntryLabels(false)
-        pieChart.description = desc
-        pieChart.isRotationEnabled = false
-        pieChart.setUsePercentValues(true)
-        pieChart.setHoleColor(Color.TRANSPARENT)
-        pieChart.setCenterTextColor(Color.WHITE)
-        pieChart.holeRadius = 70f
-        pieChart.setTransparentCircleAlpha(0)
-        pieChart.centerText = "Level 1"
-        pieChart.setCenterTextSize(10f)
-        pieChart.setDrawEntryLabels(true)
-        pieChart.setEntryLabelTextSize(20f)
-        pieChart.animateX(500)
+        unusedPoints = 0
+        usedPoints = 0
 
-        addDataSet()
-
-        pieChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
-            override fun onValueSelected(e: Entry?, h: Highlight) {
-
-//                var pos1 = e.toString().indexOf("(sum): ")
-//                val sales = e.toString().substring(pos1 + 7)
-//
-//                for (i in yData.indices) {
-//                    if (yData[i] == java.lang.Float.parseFloat(sales)) {
-//                        pos1 = i
-//                        break
-//                    }
-//                }
-//                val employee = xData[pos1 + 1]
-//                Toast.makeText(
-//                    context,
-//                    "Employee " + employee + "\n" + "Sales: $" + sales + "K",
-//                    Toast.LENGTH_LONG
-//                ).show()
-            }
-
-            override fun onNothingSelected() {
-
-            }
-        })
+        bindUI()
     }
 
-    private fun addDataSet() {
-        val yEntrys = arrayListOf<PieEntry>()
-        val xEntrys = arrayListOf<String>()
+    private fun AppCompatTextView.setCountAnimation(upTo: Int) {
+        val valueAnimator = ValueAnimator.ofInt(0, upTo)
+        valueAnimator.duration = 750
 
-        for (i in yData.indices) {
-            yEntrys.add(PieEntry(yData[i], i))
+        valueAnimator.addUpdateListener { animator -> text = animator.animatedValue.toString() }
+        valueAnimator.start()
+    }
+
+    private fun bindUI() {
+        aboutViewModel.user.observe(viewLifecycleOwner, Observer {
+            unusedPoints = it.usable_points!!
+            usedPoints = it.used_points!!
+            val level = it.level
+
+            tvVal1.setCountAnimation(usedPoints)
+            tvVal2.setCountAnimation(unusedPoints)
+            tvVal3.setCountAnimation(it.level!!)
+
+            if (level!! > 1){
+                lavLoyalty.setAnimation(R.raw.celly)
+            }
+        })
+
+        Coroutines.main {
+            newsViewModel.news.await().observe(viewLifecycleOwner, Observer {
+                setUpRecyclerView(it.toNewsItems())
+            })
+        }
+    }
+
+    private fun setUpRecyclerView(list: List<NewsItem>) {
+        val groupAdapter = GroupAdapter<ViewHolder>().apply {
+            addAll(list)
         }
 
-        for (i in 1 until xData.size) {
-            xEntrys.add(xData[i])
+        val manager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, true)
+        manager.apply {
+            stackFromEnd = true
         }
 
-        //create the data set
-        val pieDataSet = PieDataSet(yEntrys, "")
-        pieDataSet.sliceSpace = 2f
-        pieDataSet.valueTextSize = 12f
+        rvNews.apply {
+            layoutManager = manager
+            hasFixedSize()
+            adapter = groupAdapter
+        }
 
-        //add colors to dataset
-        val colors = arrayListOf<Int>()
-        colors.add(Color.GRAY)
-        colors.add(Color.WHITE)
+        snapper.attachToRecyclerView(rvNews)
+    }
+}
 
-        pieDataSet.colors = colors
-
-//        add legend to chart
-        val legend = pieChart.legend
-        legend.form = Legend.LegendForm.NONE
-
-        //create pie data object
-        val pieData = PieData(pieDataSet)
-        pieChart.data = pieData
-        pieChart.invalidate()
+private fun List<News>.toNewsItems(): List<NewsItem> {
+    return map {
+        NewsItem(it)
     }
 }

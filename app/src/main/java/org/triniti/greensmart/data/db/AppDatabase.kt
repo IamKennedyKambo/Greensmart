@@ -4,17 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.triniti.greensmart.data.db.daos.BinsDao
-import org.triniti.greensmart.data.db.daos.CartDao
-import org.triniti.greensmart.data.db.daos.ShopDao
-import org.triniti.greensmart.data.db.daos.UserDao
-import org.triniti.greensmart.data.db.entities.Bin
-import org.triniti.greensmart.data.db.entities.Cart
-import org.triniti.greensmart.data.db.entities.Shop
-import org.triniti.greensmart.data.db.entities.User
+import androidx.sqlite.db.SupportSQLiteDatabase
+import org.triniti.greensmart.data.db.daos.*
+import org.triniti.greensmart.data.db.entities.*
+import org.triniti.greensmart.utilities.Coroutines
 
 @Database(
-    entities = [User::class, Bin::class, Shop::class, Cart::class],
+    entities = [User::class, Bin::class, Shop::class, Cart::class, News::class],
     version = 2,
     exportSchema = false
 )
@@ -24,6 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun getBinsDao(): BinsDao
     abstract fun getShopDao(): ShopDao
     abstract fun getCartDao(): CartDao
+    abstract fun getNewsDao(): NewsDao
 
     companion object {
 
@@ -44,6 +41,28 @@ abstract class AppDatabase : RoomDatabase() {
             AppDatabase::class.java,
             "App-Database.db"
         ).fallbackToDestructiveMigration()
+            .addCallback(object : Callback() {
+                override fun onCreate(db: SupportSQLiteDatabase) {
+                    super.onCreate(db)
+                    prepopulateDb(INSTANCE!!)
+                }
+            })
             .build()
+
+        fun prepopulateDb(db: AppDatabase) {
+            val message = mutableListOf<News>()
+            message.add(
+                News(
+                    0,
+                    "Welcome to Greensmart feeds!",
+                    "This where you'll see notifications about greensmart events and other news. \nSwipe to view more info cards",
+                    0,
+                    "https://www.psdgraphics.com/file/wavy-turquoise-background.jpg"
+                )
+            )
+            Coroutines.io {
+                db.getNewsDao().insertMessages(message)
+            }
+        }
     }
 }

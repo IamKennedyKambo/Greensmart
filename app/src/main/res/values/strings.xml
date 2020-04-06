@@ -3,22 +3,14 @@
     <string name="create_account">Don\'t have an account? <a href="#">Create one here</a></string>
     <string name="login">Login</string>
     <string name="log_in">Already a member? <a href="#">Log in here</a></string>
-    <string name="password">Password</string>
-    <string name="email">Email</string>
     <string name="checkout">Checkout</string>
-    <string name="total">Total</string>
-    <string name="balance">Balance</string>
-    <string name="billed">Billed</string>
-    <string name="unit_cost">Unit cost</string>
-    <string name="your_points">Your points</string>
     <string name="times">*</string>
     <string name="locate_shops">Locate shops</string>
     <string name="one">1</string>
     <string name="profile">Profile</string>
     <string name="claim">CLAIM</string>
-    <string name="delete">delete</string>
     <string name="one_placeholder">1</string>
-    <string name="before_you_start">Before you start...</string>
+    <string name="before_you_start">Before you start&#8230;</string>
     <string name="cardid_prompt">Please enter the unique identification number on the card provided by our agents into the text field below. We will use this card to award you points after you dispose into our bins.</string>
     <string name="enter_card_id">Enter card Id</string>
     <string name="done">Done</string>
@@ -31,6 +23,17 @@
     <string name="description">Description</string>
     <string name="cancel">Cancel</string>
     <string name="confirm">Confirm</string>
+    <string name="create_acc">CREATE ACCOUNT</string>
+    <string name="tell_us_more">Tell us more about yourself</string>
+    <string name="logout_title">Are you sure?</string>
+    <string name="logout_message">This will remove all your local account data and take you back to Log In</string>
+    <string name="news_content">This is where you\'ll see notifications about greensmart events and news.</string>
+    <string name="used">Used coins</string>
+    <string name="unused">Balance</string>
+    <string name="zero_placeholder">0</string>
+    <string name="delete">DELETE</string>
+    <string name="coins"> Coins</string>
+    <string name="ksh"> Ksh</string>
+    <string name="level">Level</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
 </resources>

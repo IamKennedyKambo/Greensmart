@@ -1,10 +1,7 @@
 package org.triniti.greensmart.data.db.daos
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import org.triniti.greensmart.data.db.entities.CURRENT_USER_ID
 import org.triniti.greensmart.data.db.entities.User
 
@@ -15,4 +12,7 @@ interface UserDao {
 
     @Query("select * from user where uid = $CURRENT_USER_ID")
     fun getUser(): LiveData<User>
+
+    @Query("delete from user")
+    suspend fun clearUserData()
 }

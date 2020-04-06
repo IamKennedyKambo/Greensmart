@@ -1,6 +1,8 @@
 package org.triniti.greensmart.ui.home.shop.purchase.fragments.success
 
+import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.layout_d_locate.*
 import kotlinx.android.synthetic.main.layout_f_success.*
@@ -23,45 +24,25 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import org.triniti.greensmart.R
-import org.triniti.greensmart.utilities.DataViewModel
-import org.triniti.greensmart.utilities.addMenu
-import org.triniti.greensmart.utilities.generateQrCode
+import org.triniti.greensmart.ui.home.shop.mall.MallViewModel
+import org.triniti.greensmart.ui.home.shop.mall.MallViewModelFactory
+import org.triniti.greensmart.utilities.*
+import java.io.IOException
 
 
 class Success : Fragment(), KodeinAware, OnMapReadyCallback {
 
     override val kodein by kodein()
     private val dataViewModel: DataViewModel by instance()
+    private lateinit var shopViewModel: MallViewModel
+    private val mallFactory: MallViewModelFactory by instance()
+    private val shops: MutableList<LatLng> = mutableListOf()
+    private lateinit var map: GoogleMap
+
     override fun onMapReady(p0: GoogleMap) {
-        val milele = LatLng(-1.358040, 36.656764)
-        val naivas = LatLng(-1.361926, 36.655183)
-
-        val latLng = LatLng(-1.340529, 36.649208)
-        val latLng1 = LatLng(-1.375498, 36.664274)
-
-        val builder = LatLngBounds.Builder()
-
-        //add them to builder
-        builder.include(latLng)
-        builder.include(latLng1)
-
-        val bounds = builder.build()
-
-        //get width and height to current display screen
-//        val width = resources.displayMetrics.widthPixels
-//        val height = resources.displayMetrics.heightPixels
-
-        // 20% padding
-//        val padding = (width * 0.20).toInt()
-
-        //set latlong bounds
-        p0.setLatLngBoundsForCameraTarget(bounds)
-
-        //move camera to fill the bound to screen
-
-        p0.addMarker(MarkerOptions().position(milele).title("Milele mall"))
-        p0.addMarker(MarkerOptions().position(naivas).title("Naivas supermarket"))
-        p0.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 10))
+        setZoom(p0)
+        addShops(p0)
+        map = p0
     }
 
     private val sheetCallback = object : BottomSheetBehavior.BottomSheetCallback() {
@@ -91,6 +72,11 @@ class Success : Fragment(), KodeinAware, OnMapReadyCallback {
     }
     private lateinit var sheetBehavior: BottomSheetBehavior<*>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        shopViewModel = activity?.getViewModel(mallFactory)!!
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -108,22 +94,7 @@ class Success : Fragment(), KodeinAware, OnMapReadyCallback {
 
         initViews()
 
-        dataViewModel.product.observe(viewLifecycleOwner, Observer { product ->
-            tbSuccess.title = product.name
-            Glide.with(context!!)
-                .load(product.image)
-                .into(ivSuccess)
-            generateQrCode(product.code, ivCode)
-        })
-
-        dataViewModel.cart.observe(viewLifecycleOwner, Observer { cart ->
-            tbSuccess.title = cart.name
-            Glide.with(context!!)
-                .load(cart.image)
-                .into(ivSuccess)
-            tvCount.text = cart.count.toString()
-            generateQrCode(cart.code, ivCode)
-        })
+        bindUI()
 
         addMenu(tbSuccess)
 
@@ -140,6 +111,53 @@ class Success : Fragment(), KodeinAware, OnMapReadyCallback {
 
     private fun removeMap() {
         childFragmentManager.beginTransaction().remove(setUpMap()).commit()
+    }
+
+    private fun setZoom(map: GoogleMap){
+        try {
+            val address = Geocoder(context).getFromLocationName("Kenya", 1)
+            if (address == null) {
+                return
+            } else {
+                val loc = address[0]
+                val pos =  LatLng(loc.latitude, loc.longitude)
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 6f))
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun bindUI() {
+        dataViewModel.product.observe(viewLifecycleOwner, Observer { product ->
+            tbSuccess.title = product.name
+            Glide.with(context!!)
+                .load(product.image)
+                .into(ivSuccess)
+            generateQrCode(product.code, ivCode)
+        })
+
+        dataViewModel.cart.observe(viewLifecycleOwner, Observer { cart ->
+            tbSuccess.title = cart.name
+            Glide.with(context!!)
+                .load(cart.image)
+                .into(ivSuccess)
+            tvCount.text = cart.count.toString()
+            generateQrCode(cart.code, ivCode)
+        })
+    }
+
+    private fun addShops(map: GoogleMap) {
+        Coroutines.main {
+            shopViewModel.shops.await().observe(viewLifecycleOwner, Observer {
+                it.forEach { shop ->
+                    shops.add(LatLng(shop.latitude, shop.longitude))
+                }
+
+
+                addMarkers(shops, map, context!!, R.drawable.vector_bin)
+            })
+        }
     }
 
     private fun initViews() {

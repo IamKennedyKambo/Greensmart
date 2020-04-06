@@ -10,7 +10,9 @@
         android:label="Signin">
         <action
             android:id="@+id/action_signin_to_signup"
-            app:destination="@id/destination_signup" />
+            app:destination="@id/destination_signup"
+            app:enterAnim="@anim/fragment_fade_exit"
+            app:exitAnim="@anim/fragment_fade_enter" />
     </fragment>
     <fragment
         android:id="@+id/destination_signup"
@@ -18,6 +20,8 @@
         android:label="Signup">
         <action
             android:id="@+id/action_destination_signup_to_destination_signin"
-            app:destination="@id/destination_signin" />
+            app:destination="@id/destination_signin"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
 </navigation>

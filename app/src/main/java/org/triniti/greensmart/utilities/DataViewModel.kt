@@ -10,6 +10,7 @@ class DataViewModel : ViewModel() {
     val product: MutableLiveData<Product> = MutableLiveData()
     val cart: MutableLiveData<Cart> = MutableLiveData()
     val success: MutableLiveData<Boolean> = MutableLiveData()
+    val complete: MutableLiveData<Boolean> = MutableLiveData()
 
     fun setProduct(product: Product) {
         this.product.postValue(product)
@@ -21,5 +22,9 @@ class DataViewModel : ViewModel() {
 
     fun setSuccess(value: Boolean) {
         success.postValue(value)
+    }
+
+    fun updateComplete(yes: Boolean){
+        complete.postValue(yes)
     }
 }

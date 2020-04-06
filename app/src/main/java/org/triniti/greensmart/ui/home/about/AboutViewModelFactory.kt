@@ -2,6 +2,7 @@ package org.triniti.greensmart.ui.home.about
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import org.triniti.greensmart.data.preferences.PreferenceProvider
 import org.triniti.greensmart.data.repositories.AuthRepository
 import org.triniti.greensmart.data.repositories.BinsRepository
 

@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
@@ -135,24 +134,24 @@ fun convertBinToLatLng(list: List<Bin>, map: GoogleMap, context: Context) {
         listLats.add(latLng)
     }
 
-    addMarkers(listLats, map, context)
+    addMarkers(listLats, map, context, R.drawable.vector_bin)
 }
 
-fun addMarkers(locations: List<LatLng>, map: GoogleMap, context: Context) {
+fun addMarkers(locations: List<LatLng>, map: GoogleMap, context: Context, drawable: Int?) {
     locations.forEach {
         map.addMarker(
             MarkerOptions().position(it).icon(
                 bitmapDescriptorFromVector(
                     context,
-                    R.drawable.vector_bin
+                    drawable
                 )
             )
         )
     }
 }
 
-fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
-    val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
+fun bitmapDescriptorFromVector(context: Context, vectorResId: Int?): BitmapDescriptor {
+    val vectorDrawable = vectorResId?.let { ContextCompat.getDrawable(context, it) }
     vectorDrawable!!.setBounds(
         0,
         0,
@@ -179,7 +178,7 @@ fun RecyclerView.runLayoutAnimation() {
 }
 
 fun randomString(): String {
-    val randSize = 12
+    val randSize = 24
     val random = Random()
     val sb = StringBuilder(randSize)
     for (i in 0 until randSize)
@@ -202,8 +201,22 @@ fun Product.toCart(userId: Int, points: Int, code: String, count: Int): Cart {
         points = points,
         count = count,
         code = code,
-        description = this.description
+        description = this.description,
+        redeemed = 0
     )
+}
+
+fun setLevel(points: Int): Int {
+    return when {
+        points <= 50 -> 1
+        points > 50 -> 2
+        points <= 100 -> 2
+        points > 100 -> 3
+        points <= 175 -> 3
+        points > 175 -> 4
+        points <= 250 -> 4
+        else -> 5
+    }
 }
 
 inline fun <reified T : ViewModel> FragmentActivity.getViewModel(factory: ViewModelProvider.NewInstanceFactory): T {

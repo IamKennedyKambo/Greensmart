@@ -2,16 +2,38 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <!-- Customize your theme here. -->
-<!--        <item name="colorPrimaryDark">#30000000</item>-->
         <item name="android:windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+<!--        <item name="android:statusBarColor">#60000000</item>-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-<!--        <product name="colorPrimaryDark">@color/colorPrimaryDark</product>-->
+        <item name="android:navigationBarColor">@color/translucentGreen</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="md_corner_radius">8dp</item>
-<!--        <item name="android:navigationBarColor">#60000000</item>-->
+    </style><!-- Base application theme. -->
+
+    <style name="LoginTheme" parent="Theme.MaterialComponents.Light">
+        <item name="android:windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="colorPrimary">@color/colorPrimaryLogin</item>
+        <item name="colorAccent">@color/colorPrimaryLogin</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="md_corner_radius">8dp</item>
+        <item name="android:textColor">@color/colorPrimaryLogin</item>
+        <item name="android:textColorSecondary">@color/colorPrimaryLogin</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryLogin</item>
     </style>
 
+    <style name="TextInputs" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorPrimaryLogin</item>
+        <item name="hintTextColor">@color/colorPrimaryLogin</item>
+        <item name="passwordToggleTint">@color/colorPrimaryLogin</item>
+    </style>
+
+    <style name="MaterialButtons" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">#ffff</item>
+    </style>
 </resources>

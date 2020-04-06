@@ -20,6 +20,7 @@ import org.triniti.greensmart.ui.home.bins.BinsViewModelFactory
 import org.triniti.greensmart.ui.home.cart.CartViewModelFactory
 import org.triniti.greensmart.ui.home.shop.mall.MallViewModelFactory
 import org.triniti.greensmart.ui.home.shop.single.ProductsViewModelFactory
+import org.triniti.greensmart.ui.home.stats.NewsViewModelFactory
 import org.triniti.greensmart.utilities.DataViewModel
 
 class App : Application(), KodeinAware {
@@ -33,8 +34,9 @@ class App : Application(), KodeinAware {
         bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { ProductsRepository(instance()) }
-        bind() from singleton { CartRepository(instance()) }
-        bind() from singleton { AuthRepository(instance(), instance()) }
+        bind() from singleton { CartRepository(instance(), instance()) }
+        bind() from singleton { NewsRepository(instance(), instance(), instance()) }
+        bind() from singleton { AuthRepository(instance(), instance(), instance()) }
         bind() from singleton { BinsRepository(instance(), instance(), instance()) }
         bind() from singleton { MallRepository(instance(), instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance(), instance()) }
@@ -43,6 +45,7 @@ class App : Application(), KodeinAware {
         bind() from provider { MallViewModelFactory(instance()) }
         bind() from provider { CartViewModelFactory(instance()) }
         bind() from provider { ProductsViewModelFactory(instance()) }
+        bind() from provider { NewsViewModelFactory(instance()) }
     }
 
     override fun onCreate() {

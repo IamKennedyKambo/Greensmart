@@ -5,18 +5,21 @@ import org.triniti.greensmart.data.db.entities.User
 import org.triniti.greensmart.data.network.GreenApi
 import org.triniti.greensmart.data.network.SafeApiCall
 import org.triniti.greensmart.data.network.responses.AuthResponse
+import org.triniti.greensmart.data.preferences.PreferenceProvider
 
-class AuthRepository(private val api: GreenApi, private val db: AppDatabase) : SafeApiCall() {
+class AuthRepository(
+    private val api: GreenApi,
+    private val db: AppDatabase,
+    private val prefs: PreferenceProvider
+) : SafeApiCall() {
 
-    suspend fun userLogin(email: String, password: String): AuthResponse {
-        val user = User(email = email, password = password)
+    suspend fun userLogin(user: User): AuthResponse {
         return apiRequest {
             api.userLogin(user)
         }
     }
 
-    suspend fun userSignUp(name: String, email: String, password: String): AuthResponse {
-        val user = User(name = name, email = email, password = password)
+    suspend fun userSignUp(user: User): AuthResponse {
         return apiRequest {
             api.userSignup(
                 user
@@ -32,6 +35,16 @@ class AuthRepository(private val api: GreenApi, private val db: AppDatabase) : S
 
     suspend fun saveUser(user: User) {
         db.getUserDao().upsert(user)
+    }
+
+    suspend fun fetchUser(): AuthResponse {
+        return apiRequest {
+            api.getUser(prefs.getUserId()!!)
+        }
+    }
+
+    suspend fun logOut() {
+        db.getUserDao().clearUserData()
     }
 
 

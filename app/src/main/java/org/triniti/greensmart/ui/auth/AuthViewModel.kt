@@ -46,9 +46,11 @@ class AuthViewModel(
             return
         }
 
+        val user = User(email = email, password = password)
+
         Coroutines.main {
             try {
-                val authResponse = repository.userLogin(email!!, password!!)
+                val authResponse = repository.userLogin(user)
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
                     repository.saveUser(it)
@@ -67,7 +69,6 @@ class AuthViewModel(
             }
         }
     }
-
 
     fun onSignUpButtonClicked(view: View) {
         authListener?.onStarted()
@@ -97,9 +98,11 @@ class AuthViewModel(
             return
         }
 
+        val user = User(name = name, email = email, password = password)
+
         Coroutines.main {
             try {
-                val authResponse = repository.userSignUp(name!!, email!!, password!!)
+                val authResponse = repository.userSignUp(user)
                 authResponse.user?.let {
                     authListener?.onSuccess(it)
                     repository.saveUser(it)

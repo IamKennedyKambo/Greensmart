@@ -4,4 +4,5 @@ import org.triniti.greensmart.data.db.entities.User
 
 interface OnCompletionListener{
     fun onCompletion(user: User)
+    fun onFailure(message: String)
 }

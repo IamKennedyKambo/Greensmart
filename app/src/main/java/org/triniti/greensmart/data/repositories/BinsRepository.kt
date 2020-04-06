@@ -11,9 +11,8 @@ import org.triniti.greensmart.data.db.entities.Bin
 import org.triniti.greensmart.data.network.GreenApi
 import org.triniti.greensmart.data.network.SafeApiCall
 import org.triniti.greensmart.data.preferences.PreferenceProvider
+import org.triniti.greensmart.utilities.Constants.MINIMAL_INTERVAL_THREE
 import org.triniti.greensmart.utilities.Coroutines
-
-private const val MINIMUM_INTERVAL = 6
 
 class BinsRepository(
     private val api: GreenApi,
@@ -56,6 +55,6 @@ class BinsRepository(
     }
 
     private fun isFetchNeeded(savedAt: LocalDateTime): Boolean {
-        return ChronoUnit.HOURS.between(savedAt, LocalDateTime.now()) > MINIMUM_INTERVAL
+        return ChronoUnit.MINUTES.between(savedAt, LocalDateTime.now()) > MINIMAL_INTERVAL_THREE
     }
 }

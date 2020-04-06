@@ -33,10 +33,9 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvShop"
                 android:layout_width="match_parent"
-                android:background="#ababaa"
+                android:background="#fafafa"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="TextView"
                 android:padding="6dp"
                 android:textSize="18sp"
                 android:textStyle="bold" />

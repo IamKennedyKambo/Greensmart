@@ -29,7 +29,7 @@
         android:scrollHorizontally="true"
         android:textStyle="bold"
         android:singleLine="true"
-        app:layout_constraintVertical_bias=".3"
+        app:layout_constraintVertical_bias=".2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivProduct"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,5 +40,13 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@id/ivProduct"
         app:layout_constraintTop_toBottomOf="@id/tvName"
+        android:layout_height="wrap_content" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:id="@+id/tvPoints"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/ivProduct"
+        app:layout_constraintTop_toBottomOf="@id/tvPrice"
         android:layout_height="wrap_content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

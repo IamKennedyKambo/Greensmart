@@ -18,5 +18,6 @@ data class Cart(
     var points: Int,//Points
     var count: Int,
     var code: String,//Item redeem code
-    var description: String
+    var description: String,
+    var redeemed: Int
 ) : Parcelable

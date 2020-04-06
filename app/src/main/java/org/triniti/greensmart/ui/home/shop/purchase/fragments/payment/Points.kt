@@ -27,13 +27,11 @@ import org.triniti.greensmart.ui.home.about.AboutViewModel
 import org.triniti.greensmart.ui.home.about.AboutViewModelFactory
 import org.triniti.greensmart.ui.home.cart.CartViewModel
 import org.triniti.greensmart.ui.home.cart.CartViewModelFactory
-import org.triniti.greensmart.utilities.DataViewModel
-import org.triniti.greensmart.utilities.getViewModel
-import org.triniti.greensmart.utilities.randomString
-import org.triniti.greensmart.utilities.toCart
+import org.triniti.greensmart.utilities.*
 
 
 class Points : Fragment(), KodeinAware, SeekBar.OnSeekBarChangeListener {
+
     override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
         tvCount.text = p1.toString()
         count = p1
@@ -111,11 +109,15 @@ class Points : Fragment(), KodeinAware, SeekBar.OnSeekBarChangeListener {
                     )
                 )
 
-                val newUser = user.copy(
-                    usable_points = user.usable_points?.minus(pts)
-                )
+                Coroutines.main {
+                    val newUser = user.copy(
+                        usable_points = user.usable_points?.minus(pts),
+                        used_points = user.used_points?.plus(pts),
+                        level = setLevel(user.used_points?.plus(pts)!!)
+                    )
 
-                aboutViewModel.updateUser(newUser)
+                    aboutViewModel.updateUser(newUser)
+                }
                 dataViewModel.setSuccess(true)
                 dataViewModel.setProduct(product!!)
 
@@ -141,7 +143,7 @@ class Points : Fragment(), KodeinAware, SeekBar.OnSeekBarChangeListener {
     }
 
     private fun canPurchase(userPoints: Int, billed: Int): Boolean {
-        return userPoints > billed
+        return userPoints >= billed
     }
 
     private fun initViewModels() {

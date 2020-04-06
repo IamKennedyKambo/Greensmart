@@ -15,8 +15,11 @@ class ProductsItems(private val product: Product, private val navController: Nav
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
         val view = viewHolder.itemView
+        val context = view.context
+
         view.tvName.text = product.name
-        view.tvPrice.text = product.price.toString() + " /= or " + product.points.toString() + "pts"
+        view.tvPrice.text = product.price.toString() + " " + context.getString(R.string.ksh)
+        view.tvPoints.text = product.points.toString() + " " + context.getString(R.string.coins)
         Glide.with(view.context)
             .load(product.image)
             .into(view.ivProduct)

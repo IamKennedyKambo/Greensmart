@@ -7,15 +7,22 @@ import org.triniti.greensmart.utilities.Coroutines
 import org.triniti.greensmart.utilities.lazyDeferred
 
 class CartViewModel(private val repository: CartRepository) : ViewModel() {
-    var id: Int? = null
 
     val cart by lazyDeferred {
-        repository.fetchCart(id!!)
+        repository.fetchCart()
     }
 
     fun insertEntry(cart: Cart) {
         Coroutines.main {
             repository.insertEntry(cart)
+            repository.fetchCart()
+        }
+    }
+
+    fun deleteEntry(id: Int) {
+        Coroutines.main {
+            repository.deleteEntry(id)
+            repository.fetchCart()
         }
     }
 }

@@ -18,36 +18,33 @@
         tools:context=".ui.auth.fragments.Signin">
 
         <FrameLayout
+            android:id="@+id/flGradient"
             android:layout_width="match_parent"
-            android:background="@color/lightGrey"
-            android:alpha=".9"
-            android:layout_height="match_parent" />
+            android:background="@drawable/login_anim_list"
+            android:layout_height="match_parent"/>
 
-        <FrameLayout
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/background_login"
+        <RelativeLayout
             android:layout_width="match_parent"
-            app:layout_constraintHeight_percent=".5"
-            android:layout_height="0dp" />
+            android:background="@color/colorTransparent"
+            app:layout_constraintHeight_percent=".4"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp">
+
+            <com.github.abdularis.civ.CircleImageView
+                app:strokeWidth="2dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                app:strokeColor="@android:color/white"
+                android:layout_width="120dp"
+                android:id="@+id/ivLogo"
+                android:src="@mipmap/ic_launcher"
+                android:layout_height="120dp" />
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:padding="20dp"
             android:layout_height="match_parent">
-
-            <com.github.abdularis.civ.CircleImageView
-                app:strokeWidth="2dp"
-                app:strokeColor="@android:color/white"
-                android:layout_width="120dp"
-                android:id="@+id/ivLogo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="20dp"
-                app:layout_constraintVertical_bias=".2"
-                android:layout_height="120dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -57,7 +54,7 @@
                 app:layout_constraintVertical_bias=".45"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="40dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/TextInputs"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -66,6 +63,8 @@
                     android:id="@+id/etEmail"
                     android:text="@={viewModel.email}"
                     android:layout_height="match_parent" />
+
+                <requestFocus/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -75,7 +74,7 @@
                 android:hint="@string/password"
                 app:passwordToggleEnabled="true"
                 android:layout_marginTop="12dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                style="@style/TextInputs"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -99,12 +98,11 @@
                 android:layout_width="match_parent"
                 android:id="@+id/butLogin"
                 app:layout_constraintTop_toBottomOf="@id/tvDummy"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/MaterialButtons"
                 android:padding="15dp"
                 android:text="@string/login"
                 android:layout_marginTop="40dp"
                 android:onClick="@{viewModel::onLoginButtonClicked}"
-                android:textColor="@color/text_color"
                 android:layout_height="wrap_content" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -113,7 +111,7 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 android:visibility="gone"
-                app:lottie_scale="0.5"
+                app:lottie_scale=".5"
                 app:lottie_rawRes="@raw/loader"
                 app:layout_constraintTop_toTopOf="@id/butLogin"
                 app:layout_constraintBottom_toBottomOf="@id/butLogin"
@@ -123,21 +121,13 @@
                 android:id="@+id/tvSignup"
                 android:padding="8dp"
                 android:autoLink="web"
-                android:textColorLink="@android:color/holo_blue_dark"
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/butLogin"
-                android:textColor="@color/colorAccent"
                 android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:text="@string/create_account"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.gms.common.SignInButton
-                android:layout_width="match_parent"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_height="wrap_content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
